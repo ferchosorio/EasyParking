@@ -1,0 +1,20 @@
+@font-face {
+    src: url(../assets/fonts/Ubuntu.ttf);
+    font-family: Ubuntu;
+}
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Ubuntu;
+    background-color: #adadad;
+}
+.icono {
+    max-width: 300px;
+    max-height: 300px;
+    pointer-events: none;
+}

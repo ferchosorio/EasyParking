@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% block signup %}
+<section class="registerForm">
+    <div class="cont">
+        <span class="titles">Registrar mi cuenta</span>
+        <form action="{{ url_for('Data_Store') }}" method="POST">
+            <div class="labl_inp">
+                <label id="lb1">Nombre y apellido</label>
+                <input type="text" name="nombre" placeholder="Nombre y apellido" autocomplete="off" required onfocus="labels(this,'#lb1')">
+            </div>
+            <div class="labl_inp">
+                <label id="lb2">Identificación</label>
+                <input type="text" name="identificacion" placeholder="Identificación" autocomplete="off" required onfocus="labels(this,'#lb2')">
+            </div>
+            <div class="labl_inp">
+                <label id="lb3">Teléfono</label>
+                <input type="tel" name="telefono" placeholder="Teléfono" autocomplete="off" required onfocus="labels(this,'#lb3')">
+            </div>
+            <div class="labl_inp">
+                <label id="lb4">Correo electrónico</label>
+                <input type="mail" name="email" placeholder="Correo electrónico" autocomplete="off" required onfocus="labels(this,'#lb4')">
+            </div>
+            <div class="labl_inp">
+                <label id="lb5">Nombre de usuario</label>
+                <input type="text" name="usuario" placeholder="Nombre de usuario" autocomplete="off" required onfocus="labels(this,'#lb5')">
+            </div>
+            <div class="labl_inp">
+                <label id="lb6">Contraseña</label>
+                <input type="password" name="contrasena" placeholder="Contraseña" autocomplete="off" required onfocus="labels(this,'#lb6')">
+            </div>
+            <input type="submit" value="Registrar" class="btRegistro">
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -100,6 +100,26 @@ class vehiclesSchema(ma.Schema):
 vehicles_schema = vehiclesSchema()
 vehicles_schemas = vehiclesSchema(many=True)
 
+class billing(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    fecha = db.Column(db.String(100))
+    entradas = db.Column(db.Integer)
+    salidas = db.Column(db.Integer)
+    balance = db.Column(db.Integer)
+
+    def __init__(self,fecha,entradas,salidas,balance):
+        self.fecha = fecha
+        self.entradas = entradas
+        self.salidas = salidas
+        self.balance = balance
+
+class billingSchema(ma.Schema):
+    class Meta:
+        campos = ('id','fecha','entradas','salidas','balance')
+
+billing_schema = billingSchema()
+billing_schemas = billingSchema(many=True)
+
 db.create_all()
 #Ejecutar creación de las tablas
 @app.route("/")

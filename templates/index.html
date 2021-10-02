@@ -9,11 +9,15 @@
     <title>Inicio | Easy Parking</title>
 </head>
 <body>
-    <h1>Esta es la página de inicio.</h1>
-    <img src="{{ url_for('static',filename='assets/images/EasyParking.png') }}" alt="Icono" class="icono">
-    <button onclick="accion('/signup')">Registrar</button>
-    <div class="content">
-        {% block signup %} {% endblock %}
+    <div class="contenidos">
+        <div class="navBar">
+            <span class="subt">Easy Parking</span>
+            <a onclick="accion('/#')">Inicio</a>
+            <a onclick="accion('/#')">Iniciar sesión</a>
+            <a onclick="accion('/signup')">Registrarme</a>
+            <a onclick="accion('/#')">Soporte</a>
+        </div>      
+        {% block contenido %} {% endblock %}
     </div>
 </body>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>

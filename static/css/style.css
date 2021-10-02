@@ -2,6 +2,37 @@
     src: url(../assets/fonts/Ubuntu.ttf);
     font-family: Ubuntu;
 }
+@keyframes der {
+    from {transform: translateX(100%);}
+    to {transform: translateX(0%);}
+}
+@keyframes izq {
+    from {transform: translateX(-100%);}
+    to {transform: translateX(0%);}
+}
+@keyframes arr {
+    from {transform: translateY(100%);}
+    to {transform: translateY(0%);}
+}
+@keyframes aba {
+    from {transform: translateY(-100%);}
+    to {transform: translateY(0%);}
+}
+@keyframes cent {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+}
+@keyframes aa {
+    from {transform: translateY(-5%);}
+    to {transform: translateY(-20%);}
+}
+@keyframes gira {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg);}
+}
+:root {
+    --azul: #0669b2;
+}
 * {
     box-sizing: border-box;
     user-select: none;
@@ -11,10 +42,315 @@ body {
     margin: 0;
     padding: 0;
     font-family: Ubuntu;
-    background-color: #adadad;
+    background-color: #eee;
+}
+.contenidos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.navBar {
+    width: 100%;
+    height: 10vh;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(../assets/images/EasyParking.png);
+    background-size: 50px;
+    background-position: 8px;
+    background-repeat: no-repeat;
+    padding-right: 25px;
+}
+.subt {
+    position: absolute;
+    left: 60px;
+    font-size: 1.4em;
+    color: var(--azul);
+}
+.navBar a {
+    text-decoration: none;
+    margin: 12px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--azul);
+    font-size: 14px;
+}
+.leftSide {
+    width: 50%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.leftSide h1 {
+    color: #fff;
+    font-weight: bold;
+}
+.rightSide {
+    width: 50%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .icono {
-    max-width: 300px;
-    max-height: 300px;
+    width: 90%;
+    height: 90%;
     pointer-events: none;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fondo {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    /*animation: cent .8s normal;*/
+    transition: all 1s ease-in-out;
+}
+.auto {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: izq 1s normal;
+    transition: all 1s ease-in-out;
+}
+.engrane1 {
+    animation: der 2s normal;
+    transition: all 1s ease-in-out;
+}
+.engrane11 {
+    position: absolute;
+    display: flex;
+    margin: 10% 10% 50% 72%;
+    max-width: 20%;
+    max-height: 20%;
+    transition: all 1s ease-in-out;
+    animation: gira 8s infinite;
+    animation-direction: normal;
+}
+.engrane2 {
+    position: absolute;
+    display: flex;
+    margin: 10% 10% 34% 86%;
+    max-width: 20%;
+    max-height: 20%;
+    transition: all 1s ease-in-out;
+    animation: gira 6s infinite;
+    animation-direction: reverse;
+}
+.moneda1 {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: izq 2.5s normal;
+    transition: all 1s ease-in-out;
+}
+.moneda2 {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: izq 2s normal;
+    transition: all 1s ease-in-out;
+}
+.moneda3 {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: izq 1s normal;
+    transition: all 1s ease-in-out;
+}
+.person {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: izq 3s normal;
+    transition: all 1s ease-in-out;
+}
+.ubic {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    animation: aba 1s normal;
+    transition: all 1s ease-in-out;
+    z-index: 2;
+}
+.move {
+    animation: aa 1.3s infinite;
+    animation-direction: alternate;
+    transition: all .6s ease-in-out;
+}
+.registerForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.titles {
+    font-size: 1.5em;
+    color: var(--azul);
+}
+.contForm,.contForm form {
+    width: 90%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.contForm form {
+    width: 100%;
+    height: 100%;
+}
+.labl_inp {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.labl_inp label {
+    color: var(--azul);
+    font-size: 14px;
+    opacity: 0;
+    transition: all .7s ease-in-out;
+}
+.labl_inp input[type="text"],
+.labl_inp input[type="mail"] {
+    width: 95%;
+    height: 35px;
+    padding: 5px 5px 3px 35px;
+    border: 1px solid var(--azul);
+    background-color: transparent;
+    color: #101010;
+    font-size: 16px;
+    transition: all .7s ease-in-out;
+    margin: 8px 0px 8px 0px;
+    border-radius: 8px;
+    outline: none;
+    background-position: 8px;
+    background-size: 25px;
+    background-repeat: no-repeat;
+}
+.duoLine {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.duoLine input::placeholder,.labl_inp input::placeholder {
+    font-size: 13px;
+    color: #2157bb77;
+}
+.duoLine input[type="tel"],
+.duoLine input[type="text"],
+.duoLine input[type="password"] {
+    width: 90%;
+    height: 35px;
+    padding: 5px 5px 3px 35px;
+    border: 1px solid var(--azul);
+    background-color: transparent;
+    color: #101010;
+    font-size: 16px;
+    transition: all .7s ease-in-out;
+    margin: 8px 0px 8px 0px;
+    border-radius: 8px;
+    outline: none;
+    background-position: 8px;
+    background-size: 25px;
+    background-repeat: no-repeat;
+}
+.duoLine input[type="password"] {
+    padding: 5px 35px 3px 35px;
+}
+.btRegistro {
+    background-color: #eee;
+    border: 0;
+    width: 140px;
+    height: 45px;
+    border: 1px solid var(--azul);
+    border-radius: 12px;
+    margin: 12px 60px 12px auto;;
+    font-size: 16px;
+    color: var(--azul);
+    font-weight: 100;
+    cursor: pointer;
+}
+.btRegistro:hover {
+    color: #fff;
+    background-color: var(--azul);
+    transition: all 1s ease-in-out;
+    background-image: url(../assets/images/SVGS/arrowDer.svg);
+    background-size: 25px;
+    background-position: 6.6rem 0.8rem;
+    background-repeat: no-repeat;
+}
+.eye {
+    max-width: 25px;
+    max-height: 25px;
+    cursor: pointer;
+    position: absolute;
+    margin: 5px 5px auto 5px;
+    display: flex;
+    right: 25px;
+    top: 25px;
+    transition: all .8s ease-in-out;
+}
+.eye:hover {
+    transition: all .8s ease-in-out;
+    transform: scale(1.05);
+}
+.land {
+    width: 100%;
+    height: 90vh;
+    margin-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.infos {
+    position: absolute;
+    width: 30rem;
+    height: 17rem;
+    overflow: hidden;
+    padding: 12px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    word-break: break-word;
+    top: 30%;
+    left: 2rem;
+    flex-direction: column;
+}
+.infos h1 {
+    color: var(--azul);
+    font-size: 2.5em;
+    margin: 8px 0px;
+}
+.infos span {
+    color: #868686;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+.infos span b {
+    font-size: 20px;
 }

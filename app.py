@@ -1,10 +1,11 @@
 from flask import Flask, request, render_template, redirect, session
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root@localhost/easy_parking'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings
@@ -12,6 +13,7 @@ app.config['SECRET_KEY'] = '123456'
 #Define clave secreta para sesión
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+migrate = Migrate(app, db)
 #Se pasan la configuración de app a el ORM y al esquema de Marshmallow
 
 @app.context_processor
@@ -20,6 +22,7 @@ def fecha():
 #Con esta función obtenemos la fecha actual
 
 class easy_parking(db.Model):
+    __tablename__ = 'easy_parking'
     id = db.Column(db.Integer, primary_key=True)
     administrador = db.Column(db.String(100))
     numero_plazas = db.Column(db.Integer)
@@ -39,6 +42,7 @@ easy_parking_schema = easy_parkingSchema()
 easy_parking_schemas = easy_parkingSchema(many=True)
 
 class administration(db.Model):
+    __tablename__ = 'administration'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100))
     identificacion = db.Column(db.String(50))
@@ -66,6 +70,7 @@ administration_schema = administrationSchema()
 administration_schemas = administrationSchema(many=True)
 
 class vehicles(db.Model):
+    __tablename__ = 'vehicles'
     id = db.Column(db.Integer, primary_key = True)
     tipo_de_vehiculo = db.Column(db.String(100))
     plaza = db.Column(db.Integer)
@@ -102,6 +107,7 @@ vehicles_schema = vehiclesSchema()
 vehicles_schemas = vehiclesSchema(many=True)
 
 class billing(db.Model):
+    __tablename__ = 'billing'
     id = db.Column(db.Integer, primary_key = True)
     fecha = db.Column(db.String(100))
     entradas = db.Column(db.Integer)
@@ -122,6 +128,7 @@ billing_schema = billingSchema()
 billing_schemas = billingSchema(many=True)
 
 class monthly(db.Model):
+    __tablename__ = 'monthly'
     id = db.Column(db.Integer, primary_key=True)
     propietario = db.Column(db.String(100))
     placa = db.Column(db.String(20))
@@ -152,6 +159,7 @@ monthly_schema = monthlySchema()
 monthly_schemas = monthlySchema(many=True)
 
 db.create_all()
+db.session.commit()
 #Ejecutar creación de las tablas
 @app.route("/")
 def EasyParking():

@@ -1,8 +1,8 @@
 {% extends "index.html" %}
 {% block contenido %}
 
-<div class="content">
-    <form action="{{ url-for('login') }}" method="post">
+<div class="loginForm">
+    <form action="{{ url_for('login') }}" method="post">
         <input type="text" name="usuario" placeholder="Usuario">
         <input type="text" name="contrasena" placeholder="Contraseña">
         <input type="submit" value="Ingresar">

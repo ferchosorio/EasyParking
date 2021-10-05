@@ -6,7 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://hilelsovsnwegz:b336a4b3981aaccdbe05c83e72138f82808fee4d482e0f8d7de7e60fbb74ec3c@ec2-52-86-123-180.compute-1.amazonaws.com:5432/dc0i6fl5dot7rm'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://hilelsovsnwegz:b336a4b3981aaccdbe05c83e72138f82808fee4d482e0f8d7de7e60fbb74ec3c@ec2-52-86-123-180.compute-1.amazonaws.com:5432/dc0i6fl5dot7rm'
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings

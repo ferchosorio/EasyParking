@@ -19,4 +19,3 @@ visitor
 Werkzeug
 flask-marshmallow
 marshmallow-sqlalchemy
-pymysql

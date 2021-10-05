@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from datetime import datetime
@@ -8,7 +8,8 @@ app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root@localhost/easy_parki
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings
-
+app.config['SECRET_KEY'] = '123456'
+#Define clave secreta para sesión
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 #Se pasan la configuración de app a el ORM y al esquema de Marshmallow
@@ -120,6 +121,36 @@ class billingSchema(ma.Schema):
 billing_schema = billingSchema()
 billing_schemas = billingSchema(many=True)
 
+class monthly(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    propietario = db.Column(db.String(100))
+    placa = db.Column(db.String(20))
+    tipo_de_vehiculo = db.Column(db.String(100))
+    color = db.Column(db.String(100))
+    fotografia = db.Column(db.String(256))
+    plaza = db.Column(db.Integer)
+    valor_a_pagar = db.Column(db.Integer)
+    fecha_entrada = db.Column(db.String(100))
+    fecha_salida = db.Column(db.String(100))
+
+    def __init__(self,propietario,placa,tipo_de_vehiculo,color,fotografia,plaza,valor_a_pagar,fecha_entrada,fecha_salida):
+        self.propietario = propietario
+        self.placa = placa
+        self.tipo_de_vehiculo = tipo_de_vehiculo
+        self.color = color
+        self.fotografia = fotografia
+        self.plaza = plaza
+        self.valor_a_pagar = valor_a_pagar
+        self.fecha_entrada = fecha_entrada
+        self.fecha_salida = fecha_salida
+
+class monthlySchema(ma.Schema):
+    class Meta:
+        campos = ('id','propietario','placa','tipo_de_vehiculo','color','fotografia','plaza','valor_a_pagar','fecha_entrada','fecha_salida')
+
+monthly_schema = monthlySchema()
+monthly_schemas = monthlySchema(many=True)
+
 db.create_all()
 #Ejecutar creación de las tablas
 @app.route("/")
@@ -130,6 +161,10 @@ def EasyParking():
 def signup():
     return render_template("signup.html")
 #Página de ingreso de datos para el registro de usarios.
+
+@app.route("/inicioSesion")
+def inicioSesion():
+    return render_template("login.html")
 
 @app.route("/Data_Store", methods=['POST'])
 def Data_Store():
@@ -146,9 +181,17 @@ def Data_Store():
     #flash("Registro exitoso")
     return redirect("/")
 #Proceso de guardado de los datos adquiridos mediante POST
-@app.route("/login")
+@app.route("/login", methods=['POST'])
 def login():
-    return render_template("login.html")
+    user = request.form['usuario']
+    cont = request.form['contrasena']
+    u = db.session.query(administration.usuario,administration.contrasena).all()
+    for i in u:
+        if user == i[0] and cont == i[1]:
+            session['usuario'] = user #Se establece un valor para la sesión
+            ss = session['usuario']
+            return f"<h1>Correcto! = {ss}</h1>"
+    return f"<h1>Error! = {user}</h1>"
 #Página de ingreso de credenciales para inicio de sesión.
 
 @app.route("/consulta_credenciales", methods=['GET'])

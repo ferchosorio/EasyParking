@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% block contenido %}
+<div class="leftSide">
+    <h1>Bienvenido</h1>
+    <div class="icono">
+        <img src="{{ url_for('static',filename='assets/images/fondo.png') }}" alt="Fondo" class="fondo">
+        <img src="{{ url_for('static',filename='assets/images/auto.png') }}" alt="Auto" class="auto">
+        <img src="{{ url_for('static',filename='assets/images/engrane11.png') }}" alt="Engrane" class="engrane1 engrane11">
+        <img src="{{ url_for('static',filename='assets/images/engrane22.png') }}" alt="Engrane" class="engrane2">
+        <img src="{{ url_for('static',filename='assets/images/moneda1.png') }}" alt="Moneda" class="moneda1">
+        <img src="{{ url_for('static',filename='assets/images/moneda2.png') }}" alt="Moneda" class="moneda2">
+        <img src="{{ url_for('static',filename='assets/images/moneda3.png') }}" alt="Moneda" class="moneda3">
+        <img src="{{ url_for('static',filename='assets/images/person.png') }}" alt="Personas" class="person">
+        <img src="{{ url_for('static',filename='assets/images/ubic.png') }}" alt="Ubicacion" class="ubic move">
+    </div>
+</div>
+<div class="rightSide">
+    <section class="registerForm">
+        <span class="titles">Registrar mi cuenta</span>
+        <div class="contForm">
+            <form action="{{ url_for('Data_Store') }}" method="POST">
+                <div class="labl_inp">
+                    <label id="lb1">Nombre y apellido</label>
+                    <input type="text" name="nombre" placeholder="Nombre y apellido" autocomplete="off" required onfocus="lab(this,'#lb1')" style="background-image: url(../static/assets/images/SVGS/name.svg);">
+                </div>
+                <div class="duoLine">
+                    <div class="labl_inp">
+                        <label id="lb2">Identificación</label>
+                        <input type="text" name="identificacion" placeholder="Identificación" autocomplete="off" required onfocus="lab(this,'#lb2')" style="background-image: url(../static/assets/images/SVGS/identification.svg);">
+                    </div>
+                    <div class="labl_inp">
+                        <label id="lb3">Teléfono</label>
+                        <input type="tel" name="telefono" placeholder="Teléfono" autocomplete="off" required onfocus="lab(this,'#lb3')" style="background-image: url(../static/assets/images/SVGS/phone.svg);">
+                    </div>
+                </div>
+                <div class="labl_inp">
+                    <label id="lb4">Correo electrónico</label>
+                    <input type="mail" name="email" placeholder="Correo electrónico" autocomplete="off" required onfocus="lab(this,'#lb4')" style="background-image: url(../static/assets/images/SVGS/mail.svg);">
+                </div>
+                <input type="text" name="fechaR" value="{{ now.date() }}" style="display: none;">
+                <div class="duoLine">
+                    <div class="labl_inp">
+                        <label id="lb5">Nombre de usuario</label>
+                        <input type="text" name="usuario" placeholder="Nombre de usuario" autocomplete="off" required onfocus="lab(this,'#lb5')"  style="background-image: url(../static/assets/images/SVGS/user.svg);">
+                    </div>
+                    <div class="labl_inp">
+                        <label id="lb6">Contraseña</label>
+                        <input type="password" name="contrasena" placeholder="Contraseña" autocomplete="off" required onfocus="lab(this,'#lb6')"  style="background-image: url(../static/assets/images/SVGS/pass.svg);" id="inputPasw">
+                        <img src="{{ url_for('static',filename='assets/images/SVGS/eye1.svg') }}" alt="Eye" class="eye" onclick="show_password(this,'#inputPasw')">
+                    </div>
+                </div>
+                <input type="submit" value="Registrar" class="btRegistro">
+            </form>
+        </div>
+    </section>
+</div>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+{% endblock %}

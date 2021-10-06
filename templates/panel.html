@@ -1,0 +1,59 @@
+{% if sesions == False: %}
+    {{ url_for("/inicioSesion") }}
+{% else: %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de control | Easy Parking</title>
+</head>
+<body>
+    {% if configs != 1: %}
+    <div class="panelControl">
+        <h1>Configurar</h1>
+        <div class="contForma">
+            <form action="{{ url_for('configurar') }}" method="post" enctype="multipart/form-data">
+                <input type="text" name="administrador" placeholder="Adminstrador" value="{{ sesions }}" required>
+                <input type="number" name="numero_plazas" placeholder="Número de plazas" required>
+                <input type="file" name="logotipo">
+                <input type="submit" value="Configurar">
+            </form>
+        </div>
+    </div>
+    {% else: %}
+    <div class="contenidos">
+        <div class="navBar">
+            <span class="subt">Easy Parking</span>
+            <a onclick="accion('/panel/{{ sesions }}')">Principal</a>
+            <a onclick="accion('/panel/{{ sesions }}')">Ingresados</a>
+            <a onclick="accion('/panel/{{ sesions }}')">Información</a>
+            <a onclick="accion('/panel/{{ sesions }}')">Perfil</a>
+        </div>
+    </div>
+        <div class="panelControl">
+            <div class="options">
+                <div class="profile">
+                    <img src="{{ url_for('static',filename='/assets/images/Subidas/') }}{{ logo }}" alt="Logotipo">
+                </div>
+                <span class="opcion">Ingresar vehículo</span>
+                <span class="opcion">Mensual</span>
+                <span class="opcion">Inventario</span>
+                <span class="opcion">Facturas</span>
+                <span class="opcion">Historial</span>
+                <span class="opcion">Sistema</span>
+            </div>
+            <div class="workspace">
+
+            </div>
+        </div>
+        {% block contenido %} {% endblock %}
+    <h1>Panel de control: {{ sesions }}</h1>    
+    {% endif %}
+</body>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</html>
+{% endif %}

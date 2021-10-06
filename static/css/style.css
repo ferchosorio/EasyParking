@@ -43,6 +43,11 @@ body {
     padding: 0;
     font-family: Ubuntu;
     background-color: #eee;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+::-webkit-scrollbar {
+    display: none;
 }
 .contenidos {
     width: 100%;
@@ -72,6 +77,8 @@ body {
     left: 60px;
     font-size: 1.4em;
     color: var(--azul);
+    animation: arr 1s normal;
+    transition: all 1s ease-in-out;
 }
 .navBar a {
     text-decoration: none;
@@ -80,6 +87,8 @@ body {
     cursor: pointer;
     color: var(--azul);
     font-size: 14px;
+    animation: aba 1.5s normal;
+    transition: all 1s ease-in-out;
 }
 .leftSide {
     width: 50%;
@@ -126,7 +135,17 @@ body {
     animation: izq 1s normal;
     transition: all 1s ease-in-out;
 }
+.person2 {
+    position: absolute;
+    display: flex;
+    max-width: 90%;
+    max-height: 90%;
+    z-index: 2;
+    animation: der 2s normal;
+    transition: all 1s ease-in-out;
+}
 .engrane1 {
+    z-index: 2;
     animation: der 2s normal;
     transition: all 1s ease-in-out;
 }
@@ -207,6 +226,8 @@ body {
 .titles {
     font-size: 1.5em;
     color: var(--azul);
+    animation: aba 1s normal;
+    transition: all 1s ease-in-out;
 }
 .contForm,.contForm form {
     width: 90%;
@@ -215,6 +236,8 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    animation: der 1s normal;
+    transition: all 1s ease-in-out;
 }
 .contForm form {
     width: 100%;
@@ -345,11 +368,15 @@ body {
     color: var(--azul);
     font-size: 2.5em;
     margin: 8px 0px;
+    animation: izq 1s normal;
+    transition: all 1s ease-in-out;
 }
 .infos span {
     color: #868686;
     letter-spacing: 0.5px;
     font-size: 14px;
+    animation: der 1s normal;
+    transition: all 1s ease-in-out;
 }
 .infos span b {
     font-size: 20px;
@@ -360,4 +387,70 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: der 1s normal;
+    transition: all 1s ease-in-out;
+}
+.conError {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.conError h1 {
+    margin-top: -5rem;
+    color: var(--azul);
+    animation: aba 1s normal;
+    transition: all 1s ease-in-out;
+}
+.panelControl {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.options {
+    width: 23%;
+    height: 100%;
+    overflow: scroll;
+    background-color: dimgray;
+}
+.workspace {
+    width: 77%;
+    height: 100vh;
+    overflow: scroll;
+    background-color: rgb(196, 196, 196);
+}
+@media screen and (max-width: 600px) {
+    .land {
+        height: 100%;
+        flex-direction: column-reverse;
+    }
+    .land .leftSide,.land .rightSide {
+        width: 100%;
+    }
+    .icono {
+        width: 100%;
+        height: 100%;
+    }
+    .infos {
+        width: 90%;
+        height: auto;
+        position: unset;
+    }
+    .infos h1 {
+        font-size: 2em;
+    }
+    .infos span {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .contenidos {
+        flex-direction: column;
+    }
+    .contenidos .leftSide,.contenidos .rightSide {
+        width: 100%;
+    }
 }

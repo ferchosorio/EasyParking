@@ -2,16 +2,20 @@ from flask import Flask, request, render_template, redirect, session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from werkzeug.utils import secure_filename
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://hilelsovsnwegz:b336a4b3981aaccdbe05c83e72138f82808fee4d482e0f8d7de7e60fbb74ec3c@ec2-52-86-123-180.compute-1.amazonaws.com:5432/dc0i6fl5dot7rm'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
+#app.config['SQLALCHEMY_DATABASE_URI']='postgresql://hilelsovsnwegz:b336a4b3981aaccdbe05c83e72138f82808fee4d482e0f8d7de7e60fbb74ec3c@ec2-52-86-123-180.compute-1.amazonaws.com:5432/dc0i6fl5dot7rm'
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings
 app.config['SECRET_KEY'] = '123456'
 #Define clave secreta para sesión
+app.config['UPLOAD_FOLDER'] = "static/assets/images/Subidas"
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
@@ -162,6 +166,20 @@ monthly_schemas = monthlySchema(many=True)
 db.create_all()
 db.session.commit()
 #Ejecutar creación de las tablas
+
+@app.route("/panel")
+def noPanel():
+    return redirect("/")
+@app.route("/login")
+def noLogin():
+    return redirect("/")
+@app.route("/Data_Store")
+def nodataStore():
+    return redirect("/")
+@app.route("/configurar")
+def noconfig():
+    return redirect("/")
+
 @app.route("/")
 def EasyParking():
     return render_template("main.html")
@@ -190,6 +208,37 @@ def Data_Store():
     #flash("Registro exitoso")
     return redirect("/")
 #Proceso de guardado de los datos adquiridos mediante POST
+
+@app.route("/configurar", methods=['POST'])
+def configurar():
+    administrador = request.form['administrador']
+    numero_plazas = request.form['numero_plazas']
+    f = request.files['logotipo']
+    if f.filename == '':
+        filename = "default_logo.png"
+    filename = secure_filename(f.filename)
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+    first_config = easy_parking(administrador,numero_plazas,filename)
+    db.session.add(first_config)
+    db.session.commit()
+    return redirect(f"/panel/{administrador}")
+
+@app.route("/panel/<sesion>")
+def panel(sesion):
+    conf = 0
+    u = db.session.query(administration.usuario).all()
+    config = db.session.execute("SELECT count(id) as c FROM easy_parking").scalar()
+    if config > 0:
+        conf = 1
+        imagenes = db.session.query(easy_parking.logotipo).all()
+        for imgn in imagenes:
+            logo = imgn[0]
+    for i in u:
+        if sesion == i[0]:
+            return render_template("panel.html",sesions = sesion,configs = conf,logo = logo)
+        else:
+            return redirect("/inicioSesion")
+
 @app.route("/login", methods=['POST'])
 def login():
     user = request.form['usuario']
@@ -199,8 +248,9 @@ def login():
         if user == i[0] and cont == i[1]:
             session['usuario'] = user #Se establece un valor para la sesión
             ss = session['usuario']
-            return f"<h1>Correcto! = {ss}</h1>"
-    return f"<h1>Error! = {user}</h1>"
+            return redirect(f"/panel/{ss}")
+        return redirect("/inicioSesion")
+    #return f"<h1>Error! = {user}</h1>"
 #Página de ingreso de credenciales para inicio de sesión.
 
 @app.route("/consulta_credenciales", methods=['GET'])
@@ -213,5 +263,14 @@ def controlPanel():
     return render_template("controlPanel.html")
 #Panel de control de funciones del sistema
 #Continuar con funciones del sistema
+
+@app.errorhandler(404)
+def no_encontrado(error):
+    return render_template("error.html", errors = 404),404
+
+@app.errorhandler(405)
+def no_encontrado(error):
+    return render_template("error.html", errors = 405),405
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=3000,debug=True)

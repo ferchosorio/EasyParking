@@ -1,13 +1,28 @@
 {% extends "index.html" %}
 {% block contenido %}
 <div class="land">
-    <div class="infos">
-        <h1>Toma el control de tu negocio!</h1>
-        <span><b>Easy Parking</b> es un sistema que gestiona y
-             organiza las operaciones de su negocio de parking;
-              simplificando la manera en que se lleva el control de plazas disponibles,
-               acciones de facturación, trazabilidad diaria de ingreso de vehículos
-                y estructura financiera con sistema de ingresos y egresos.</span>
+    <div class="leftSide">
+        <div class="infos">
+            <h1>Toma el control de tu negocio!</h1>
+            <span><b>Easy Parking</b> es un sistema que gestiona y
+                organiza las operaciones de su negocio de parking;
+                simplificando la manera en que se lleva el control de plazas disponibles,
+                acciones de facturación, trazabilidad diaria de ingreso de vehículos
+                    y estructura financiera con sistema de ingresos y egresos.</span>
+        </div>
+    </div>
+    <div class="rightSide">
+        <div class="icono">
+            <img src="{{ url_for('static',filename='assets/images/sec1/fondo.png') }}" alt="Fondo" class="fondo">
+            <img src="{{ url_for('static',filename='assets/images/sec1/auto.png') }}" alt="Auto" class="auto">
+            <img src="{{ url_for('static',filename='assets/images/sec1/engrane11.png') }}" alt="Engrane" class="engrane1 engrane11">
+            <img src="{{ url_for('static',filename='assets/images/sec1/engrane22.png') }}" alt="Engrane" class="engrane2">
+            <img src="{{ url_for('static',filename='assets/images/sec1/moneda1.png') }}" alt="Moneda" class="moneda1">
+            <img src="{{ url_for('static',filename='assets/images/sec1/moneda2.png') }}" alt="Moneda" class="moneda2">
+            <img src="{{ url_for('static',filename='assets/images/sec1/moneda3.png') }}" alt="Moneda" class="moneda3">
+            <img src="{{ url_for('static',filename='assets/images/sec1/person.png') }}" alt="Personas" class="person">
+            <img src="{{ url_for('static',filename='assets/images/sec1/ubic.png') }}" alt="Ubicacion" class="ubic move">
+        </div>
     </div>
 </div>
 {% endblock %}

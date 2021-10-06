@@ -226,6 +226,7 @@ def configurar():
 @app.route("/panel/<sesion>")
 def panel(sesion):
     conf = 0
+    logo = "default_logo.png"
     u = db.session.query(administration.usuario).all()
     config = db.session.execute("SELECT count(id) as c FROM easy_parking").scalar()
     if config > 0:

@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, session
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy.orm import column_property
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
@@ -25,6 +26,15 @@ migrate = Migrate(app, db)
 def fecha():
     return {'now': datetime.now()}
 #Con esta función obtenemos la fecha actual
+def fechaActual():
+    now = datetime.now()
+    return now.date()
+def horaActual():
+    now = datetime.now()
+    horas = now.hour
+    minutos = now.minute
+    segs = now.second
+    return f"{horas}:{minutos}:{segs}"
 
 class easy_parking(db.Model):
     __tablename__ = 'easy_parking'
@@ -85,12 +95,12 @@ class vehicles(db.Model):
     accesorios = db.Column(db.String(100))
     hora_entrada = db.Column(db.String(100))
     hora_salida = db.Column(db.String(100))
-    tiempo_total = db.Column(db.Integer)
+    tiempo_total = db.Column(db.String(100))
     fecha = db.Column(db.String(100))
     valor_a_pagar = db.Column(db.Integer)
     usuario = db.Column(db.String(100))
 
-    def __intit__(self,tipo_de_vehiculo,plaza,placa,color,propietario,accesorios,hora_entrada,hora_salida,tiempo_total,fecha,valor_a_pagar,usuario):
+    def __init__(self,tipo_de_vehiculo,plaza,placa,color,propietario,accesorios,hora_entrada,hora_salida,tiempo_total,fecha,valor_a_pagar,usuario):
         self.tipo_de_vehiculo = tipo_de_vehiculo
         self.plaza = plaza
         self.placa = placa
@@ -206,8 +216,32 @@ def Data_Store():
     db.session.add(new_administration)
     db.session.commit()
     #flash("Registro exitoso")
-    return redirect("/")
+    return redirect("/inicioSesion")
 #Proceso de guardado de los datos adquiridos mediante POST
+
+@app.route("/vehiculos", methods=['POST'])
+def vehiculos():
+    tipoVehiculo = request.form['tipoV']
+    plaza = request.form['plaza']
+    placa = request.form['placa']
+    color = request.form['color']
+    propietario = request.form['propietario']
+    accesorios = request.form['accesorios']
+    usuario = request.form['user']
+    horaEntrada = horaActual()
+    horaSalida = "0:0:0"
+    tiempoTotal = 0
+    fechaA = fechaActual()
+    pagar = 0
+    newVehicles = vehicles(tipoVehiculo,plaza,placa,color,propietario,accesorios,horaEntrada,horaSalida,tiempoTotal,fechaA,pagar,usuario)
+    db.session.add(newVehicles)
+    db.session.commit()
+    return redirect("/ingresar_vehiculo")
+
+@app.route("/ingresados")
+def ingresados():
+    ingre = db.session.query(vehicles).all()
+    return render_template("ingresados.html",ing = ingre)
 
 @app.route("/configurar", methods=['POST'])
 def configurar():
@@ -227,7 +261,9 @@ def configurar():
 def panel(sesion):
     conf = 0
     logo = "default_logo.png"
-    u = db.session.query(administration.usuario).all()
+    u = db.session.query(administration.usuario).filter(
+        administration.usuario == sesion
+    )
     config = db.session.execute("SELECT count(id) as c FROM easy_parking").scalar()
     if config > 0:
         conf = 1
@@ -244,14 +280,18 @@ def panel(sesion):
 def login():
     user = request.form['usuario']
     cont = request.form['contrasena']
-    u = db.session.query(administration.usuario,administration.contrasena).all()
+    u = db.session.query(administration.usuario,administration.contrasena).filter(
+        administration.usuario == user
+    ).filter(
+        administration.contrasena == cont
+    )
     for i in u:
-        if user == i[0] and cont == i[1]:
-            session['usuario'] = user #Se establece un valor para la sesión
-            ss = session['usuario']
+        if i[0] == user and i[1] == cont:
+            print(i[0]," => ",i[1])
+            session['usu'] = i[0] #Se establece un valor para la sesión
+            ss = session['usu']
             return redirect(f"/panel/{ss}")
-        return redirect("/inicioSesion")
-    #return f"<h1>Error! = {user}</h1>"
+    return redirect("/inicioSesion")
 #Página de ingreso de credenciales para inicio de sesión.
 
 @app.route("/consulta_credenciales", methods=['GET'])
@@ -263,6 +303,11 @@ def consulta_credenciales():
 def controlPanel():
     return render_template("controlPanel.html")
 #Panel de control de funciones del sistema
+
+@app.route("/ingresar_vehiculo")
+def ingresoVehiculo():
+    return render_template("ingreso_vehiculo.html", usr = session['usu'])
+
 #Continuar con funciones del sistema
 
 @app.errorhandler(404)

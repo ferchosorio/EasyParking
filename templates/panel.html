@@ -29,29 +29,31 @@
         <div class="navBar">
             <span class="subt">Easy Parking</span>
             <a onclick="accion('/panel/{{ sesions }}')">Principal</a>
-            <a onclick="accion('/panel/{{ sesions }}')">Ingresados</a>
+            <a onclick="embed(this,'#embed','/ingresados')">Ingresados</a>
             <a onclick="accion('/panel/{{ sesions }}')">Información</a>
             <a onclick="accion('/panel/{{ sesions }}')">Perfil</a>
         </div>
     </div>
         <div class="panelControl">
             <div class="options">
-                <div class="profile">
-                    <img src="{{ url_for('static',filename='/assets/images/Subidas/') }}{{ logo }}" alt="Logotipo">
+                <div class="contProfile">
+                    <div class="profile" style="background-image: url({{ url_for('static',filename='/assets/images/Subidas/') }}{{ logo }});"></div>
                 </div>
-                <span class="opcion">Ingresar vehículo</span>
-                <span class="opcion">Mensual</span>
-                <span class="opcion">Inventario</span>
-                <span class="opcion">Facturas</span>
-                <span class="opcion">Historial</span>
-                <span class="opcion">Sistema</span>
+                <div class="contOptions">
+                    <span class="opcion" onclick="embed(this,'#embed','/ingresar_vehiculo')">Ingresar vehículo</span>
+                    <span class="opcion">Mensual</span>
+                    <span class="opcion">Inventario</span>
+                    <span class="opcion">Facturas</span>
+                    <span class="opcion">Historial</span>
+                    <span class="opcion">Sistema</span>
+                </div>
             </div>
+            <div class="expansor"></div>
             <div class="workspace">
-
+                <embed class="embedWindow" id="embed" src="" type="text/html"></embed>
             </div>
         </div>
-        {% block contenido %} {% endblock %}
-    <h1>Panel de control: {{ sesions }}</h1>    
+    <!--h1>Panel de control: {{ sesions }}</h1-->    
     {% endif %}
 </body>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>

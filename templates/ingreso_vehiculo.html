@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de control | Easy Parking</title>
+</head>
+<body>
+<div class="espacio">
+    <h1>Ingreso de vehículos</h1>
+    <div class="contForma">
+        <form action="{{ url_for('vehiculos') }}" method="post">
+            <label>Tipo de vehículo: </label>
+            <select name="tipoV">
+                <option value="Motocicleta" selected>Motocicleta</option>
+                <option value="Automovil">Automovil</option>
+                <option value="Camioneta">Camioneta</option>
+                <option value="Camion">Camión</option>
+                <option value="Otros">Otros</option>
+            </select>
+            <input type="number" name="plaza" placeholder="Plaza" required>
+            <input type="text" name="placa" placeholder="Placa" required>
+            <input type="text" name="color" placeholder="Color">
+            <input type="text" name="propietario" placeholder="Propietario">
+            <label>Accesorios: </label>
+            <label>Si </label>
+            <input type="radio" name="accesorios" value="SI">
+            <label>No </label>
+            <input type="radio" name="accesorios" value="NO" checked>
+            <input type="text" name="user" value="{{ usr }}">
+            <input type="submit" value="Ingresar">
+        </form>
+    </div>
+</div>
+</body>
+</html>

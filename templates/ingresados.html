@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresados</title>
+</head>
+<body>
+    <div style="width: 100%;height: 100vh;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+        <h1>Vehículos ingresados</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Plaza</th>
+                <th>Placa</th>
+                <th>Color</th>
+                <th>Propietario</th>
+                <th>Accesorios</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>Usuario</th>
+            </tr>
+        {% for vehiculo in ing: %}
+            <tr>
+                <td>{{ vehiculo.id }}</td>
+                <td>{{ vehiculo.tipo_de_vehiculo }}</td>
+                <td>{{ vehiculo.plaza }}</td>
+                <td>{{ vehiculo.placa }}</td>
+                <td>{{ vehiculo.color }}</td>
+                <td>{{ vehiculo.propietario }}</td>
+                <td>{{ vehiculo.accesorios }}</td>
+                <td>{{ vehiculo.hora_entrada }}</td>
+                <td>{{ vehiculo.hora_salida }}</td>
+                <td>{{ vehiculo.tiempo_total }}</td>
+                <td>{{ vehiculo.fecha }}</td>
+                <td>{{ vehiculo.valor_a_pagar }}</td>
+                <td>{{ vehiculo.usuario }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

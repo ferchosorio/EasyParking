@@ -27,3 +27,14 @@ function show_password(e,inp) {
         entrada.type = "password";
     }
 }
+function embed(e,ventana,curso){
+    document.querySelector(ventana).src = curso;
+}
+function chk(e){
+    if (e.checked){
+        e.value = "SI"
+    }
+    else {
+        e.value = "NO"
+    }
+}

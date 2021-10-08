@@ -255,8 +255,19 @@ body {
     opacity: 0;
     transition: all .7s ease-in-out;
 }
+.slct {
+    width: 12rem;
+    height: 2rem;
+    border: 1px solid var(--azul);
+    border-radius: 8px;
+    padding: 5px;
+    outline: none;
+    color: var(--azul);
+    margin: 10px 10px 10px 10px;
+}
 .labl_inp input[type="text"],
-.labl_inp input[type="mail"] {
+.labl_inp input[type="mail"],
+.labl_inp input[type="number"] {
     width: 95%;
     height: 35px;
     padding: 5px 5px 3px 35px;
@@ -272,11 +283,19 @@ body {
     background-size: 25px;
     background-repeat: no-repeat;
 }
-.duoLine {
+.labl_inp input[type="radio"] {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.duoLine,.duoLineLogin {
     width: 90%;
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+.duoLineLogin {
+    flex-direction: column;
 }
 .duoLine input::placeholder,.labl_inp input::placeholder {
     font-size: 13px;
@@ -284,7 +303,8 @@ body {
 }
 .duoLine input[type="tel"],
 .duoLine input[type="text"],
-.duoLine input[type="password"] {
+.duoLine input[type="password"],
+.duoLineLogin input[type="password"] {
     width: 90%;
     height: 35px;
     padding: 5px 5px 3px 35px;
@@ -300,8 +320,12 @@ body {
     background-size: 25px;
     background-repeat: no-repeat;
 }
+.duoLineLogin input[type="password"]{
+    width: 95%;
+}
 .duoLine input[type="password"] {
     padding: 5px 35px 3px 35px;
+    transition: all .7s ease-in-out;
 }
 .btRegistro {
     background-color: #eee;
@@ -411,6 +435,22 @@ body {
     align-items: center;
     justify-content: center;
 }
+.contForma {
+    width: 70%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.contForma form {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 .options {
     width: 23%;
     height: 100%;
@@ -420,12 +460,14 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    transition: all 1s ease-in-out;
 }
 .workspace {
     width: 77%;
     height: 100vh;
     overflow: scroll;
     background-color: #eee;
+    transition: all 1s ease-in-out;
 }
 .contProfile {
     width: 100%;
@@ -483,6 +525,7 @@ body {
     background-repeat: no-repeat;
     background-size: 50%;
     z-index: 2;
+    transition: all 1s ease-in-out;
 }
 .embedWindow {
     width: 100%;
@@ -491,10 +534,260 @@ body {
     align-items: center;
     justify-content: center;
 }
+.passed,.passedL {
+    width: 350px;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    background-color: var(--azul);
+    border-radius: 12px;
+    animation: aba 1.5s both;
+    transition: all 1s ease-in-out;
+    box-shadow: 6px 12px 20px 0 #00000021;
+    z-index: 3;
+}
+.noPassed,.noPassedL {
+    width: 350px;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    background-color: #e91e63;
+    border-radius: 12px;
+    animation: aba 1.5s both;
+    transition: all 1s ease-in-out;
+    box-shadow: 6px 12px 20px 0 #00000021;
+    z-index: 3;
+}
+.passed h1,
+.noPassed h1,
+.passedL h1,
+.noPassedL h1 {
+    color: var(--azul);
+    font-size: 1.2em;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    margin: 0;
+    border-radius: 0px 0px 12px 12px;
+}
+.passed img,
+.noPassed img,
+.passedL img,
+.noPassedL img {
+    max-width: 60px;
+    max-height: 60px;
+    display: flex;
+    position: absolute;
+    top: 2.9rem;
+    margin: 0 auto 0 auto;
+}
+.passed span,
+.noPassed span,
+.passedL span,
+.noPassedL span {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    display: flex;
+    margin: 0 auto 0 auto;
+}
+.passedL button,
+.noPassedL button {
+    position: absolute;
+    display: flex;
+    border: 1px solid var(--azul);
+    width: 50px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--azul);
+    border-radius: 8px;
+    bottom: 1.5rem;
+    margin: 0 auto 0 auto;
+    cursor: pointer;
+}
+.passedL button:hover,
+.noPassedL button:hover {
+    transition: all .8s ease-in-out;
+    background-color: var(--azul);
+    color: #fff;
+}
+.conten {
+    width: 100%;
+    height: 90vh;
+    margin-top: 10vh;
+    overflow: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.caja {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.vehiculo {
+    width: 18rem;
+    height: 8rem;
+    border-radius: 8px;
+    border: 1px solid var(--azul);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    line-height: 25px;
+}
+.dato b {
+    color: var(--azul);
+}
+.placa {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    width: 90px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: orange;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #000;
+    box-shadow: 0 0 0 3px orange;
+    letter-spacing: 1px;
+    color: #101010;
+}
+.placa b {
+    position: absolute;
+    font-size: 6px;
+    margin-bottom: -30px;
+    letter-spacing: 0px;
+    color: #101010;
+}
+.btSalida {
+    width: 80px;
+    height: 40px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 8px;
+    right: 10px;
+    background-color: green;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 0;
+    transition: all .7s ease-in-out;
+}
+.btSalida:hover {
+    transition: all .7s ease-in-out;
+    transform: scale(1.08);
+}
+.vcolor {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    top: 8px;
+    margin: 6px 0px 0px 50%;
+}
+.espacio {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    margin-top: 10vh;
+}
+#FiltrarContenido {
+    width: 220px;
+    height: 35px;
+    display: flex;
+    position: absolute;
+    top: 12vh;
+    margin: 0 auto 0 auto;
+    border: 1px solid var(--azul);
+    border-radius: 8px;
+    padding: 5px 40px;
+    font-size: 14px;
+    background-image: url(../assets/images/SVGS/lupa.svg);
+    background-position: 8px;
+    background-repeat: no-repeat;
+    background-size: 25px;
+}
+.btlogo {
+    width: 100px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    background-color: var(--azul);
+    color: #fff;
+    border-radius: 8px;
+    margin: 12px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 12px 25px -5px 25px;
+}
+#preview {
+    position: absolute;
+    bottom: 5rem;
+    right: 5rem;
+}
+.tabla {
+    width: 90%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    overflow: auto;
+}
+.tabla tr {
+    height: 30px;
+}
+.tabla tr th {
+    padding: 10px;
+    text-align: center;
+    background-color: #034b81;
+    color: #fff;
+}
+.tabla tr td {
+    padding: 10px;
+    text-align: center;
+    background-color: #ebebeb;
+    color: #101010;
+    box-shadow: 0 0 0 0.2px #444;
+}
 @media screen and (max-width: 600px) {
     .land {
         height: 100%;
         flex-direction: column-reverse;
+    }
+    .tabla {
+        justify-content: unset;
     }
     .land .leftSide,.land .rightSide {
         width: 100%;

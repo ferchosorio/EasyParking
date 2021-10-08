@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Principal | Easy Parking</title>
+</head>
+<body>
+    <div class="conten">
+        {% if vals != None: %}
+        <div class="passedL">
+            <span>Easy Parking</span>
+            <img src="{{ url_for('static',filename='assets/images/SVGS/ok.svg') }}" alt="Ok">
+            <h1>Valor a cobrar: ${{ vals }}.</h1>
+            <button onclick="desWarn('.passedL')">Ok</button>
+        </div>
+        {% endif %}
+        <div class="caja">
+            {% if cs > 0: %}
+            <input type="text" id="FiltrarContenido" placeholder="Buscar vehículo">
+            {% for vehiculo in vehics: %}
+            <div class="vehiculo">
+                <span class="dato"><b>Tipo: </b>{{ vehiculo.tipo_de_vehiculo }}</span>
+                <span style="background-color:{{ vehiculo.color }};" class="vcolor"></span>
+                <span class="dato"><b>Plaza: </b>{{ vehiculo.plaza }}</span>
+                <b style="color: #0669b2;">Entrada: 
+                    <span id="hEntrada{{ vehiculo.id }}" style="color: #000;font-weight: 100;">{{ vehiculo.hora_entrada }}</span>
+                </b>
+                <span class="dato" id="tiempo{{ vehiculo.id }}"><b>Tiempo: </b></span>
+                <span class="placa">{{ vehiculo.placa }}<b>EASY PARKING</b></span>
+                <button class="btSalida" onclick="salidaV('{{ vehiculo.id }}')">Salida</button>
+            </div>
+            <script type="text/javascript">
+                setInterval(() => {
+                    var fechaHora = new Date();
+                    var h = fechaHora.getHours();
+                    var m = fechaHora.getMinutes();
+                    var s = fechaHora.getSeconds();
+                    var tim = document.querySelector("#hEntrada{{ vehiculo.id }}").innerText.split(":")
+                    var hor = tim[0];
+                    var min = tim[1];
+                    var seg = tim[2];
+                    horas = h-parseFloat(hor);
+                    minutos = m-parseFloat(min);
+                    segundos = s-parseFloat(seg);
+                    var horas_Segundos = horas * 3600;
+                    var minutos_Segundos = minutos * 60;
+                    var segundos = segundos + minutos_Segundos + horas_Segundos;
+                    var hours = Math.floor( segundos / 3600 );
+                    var minutes = Math.floor( (segundos % 3600) / 60 );
+                    var seconds = segundos % 60;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    document.querySelector('#tiempo{{ vehiculo.id }}').innerHTML = `<b>Tiempo: </b>${hours}:${minutes}:${seconds}`;
+                },1000);
+            </script>
+            {% endfor %}
+            {% else: %}
+            <h1>No hay registros para mostrar</h1>
+            <div class="icono">
+                <img src="{{ url_for('static',filename='assets/images/sec4/fondo.png') }}" alt="Fondo" class="fondo">
+                <img src="{{ url_for('static',filename='assets/images/sec4/auto.png') }}" alt="Auto" class="auto">
+                <img src="{{ url_for('static',filename='assets/images/sec4/engrane11.png') }}" style="margin: 10% 10% 45% 47%;" alt="Engrane" class="engrane1 engrane11">
+                    <img src="{{ url_for('static',filename='assets/images/sec4/engrane22.png') }}" style="margin: 10% 10% 29% 69%;" alt="Engrane" class="engrane2">
+                <img src="{{ url_for('static',filename='assets/images/sec4/candado.png') }}" alt="Candado" class="ubic">
+                <img src="{{ url_for('static',filename='assets/images/sec4/woman.png') }}" alt="Personas" class="person2">
+                <img src="{{ url_for('static',filename='assets/images/sec4/man.png') }}" alt="Personas" class="person">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        (function($) {
+            $('#FiltrarContenido').keyup(function () {
+                var ValorBusqueda = new RegExp($(this).val(), 'i');
+                $('.vehiculo').hide();
+                $('.vehiculo').filter(function () {
+                    return ValorBusqueda.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+	});
+</script>
+</html>

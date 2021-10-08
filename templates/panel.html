@@ -14,14 +14,52 @@
 <body>
     {% if configs != 1: %}
     <div class="panelControl">
-        <h1>Configurar</h1>
-        <div class="contForma">
-            <form action="{{ url_for('configurar') }}" method="post" enctype="multipart/form-data">
-                <input type="text" name="administrador" placeholder="Adminstrador" value="{{ sesions }}" required>
-                <input type="number" name="numero_plazas" placeholder="Número de plazas" required>
-                <input type="file" name="logotipo">
-                <input type="submit" value="Configurar">
-            </form>
+        <div class="espacio">
+            <div class="leftSide">
+                <div class="icono">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/fondo.png') }}" alt="Fondo" class="fondo">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/auto.png') }}" alt="Auto" class="auto">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/m1.png') }}" alt="Moneda" class="moneda1">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/m2.png') }}" alt="Moneda" class="moneda2">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/m3.png') }}" alt="Moneda" class="moneda3">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/m4.png') }}" alt="Moneda" class="moneda1">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/woman.png') }}" alt="Personas" class="person">
+                    <img src="{{ url_for('static',filename='assets/images/sec2/man.png') }}" alt="Personas" class="person2">
+                </div>
+            </div>
+            <div class="rightSide">
+                <section class="registerForm">
+                    <h1>Configurar Easy Parking</h1>
+                    <form action="{{ url_for('configurar') }}" method="post" enctype="multipart/form-data">
+                        <div class="duoLine">
+                            <div class="labl_inp">
+                                <label id="lb1">Número de plazas: </label>
+                                <input type="number" name="numero_plazas" placeholder="Número de plazas" autocomplete="off" required onfocus="lab(this,'#lb1')" style="background-image: url(../static/assets/images/SVGS/identification.svg);">
+                            </div>
+                            <label for="logotipo" class="btlogo">Logotipo</label>
+                            <div class="labl_inp">
+                                <input type="file" name="logotipo" id="logotipo" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="duoLine">
+                            <div class="labl_inp">
+                                <label id="lb2">Tarifa motocicleta x3H: </label>
+                                <input type="number" name="tarifaMoto" placeholder="Tarifa motocicleta" autocomplete="off" required onfocus="lab(this,'#lb2')" style="background-image: url(../static/assets/images/SVGS/moto.svg);">
+                            </div>
+                            <div class="labl_inp">
+                                <label id="lb3">Tarifa Automóvil x3H: </label>
+                                <input type="text" name="tarifaAuto" placeholder="Tarifa Automóvil" autocomplete="off" required onfocus="lab(this,'#lb3')" style="background-image: url(../static/assets/images/SVGS/car.svg);">
+                            </div>
+                            <div class="labl_inp">
+                                <label id="lb4">Tarifa Camión x3H: </label>
+                                <input type="text" name="tarifaCamion" placeholder="Tarifa Camión" autocomplete="off" required onfocus="lab(this,'#lb4')" style="background-image: url(../static/assets/images/SVGS/camion.svg);">
+                            </div>
+                        </div>
+                        <input type="submit" value="Configurar" class="btRegistro">
+                    </form>
+                </section>
+                <div id="preview"></div>
+            </div>
         </div>
     </div>
     {% else: %}
@@ -35,27 +73,43 @@
         </div>
     </div>
         <div class="panelControl">
-            <div class="options">
+            <div class="options" id="options">
                 <div class="contProfile">
                     <div class="profile" style="background-image: url({{ url_for('static',filename='/assets/images/Subidas/') }}{{ logo }});"></div>
                 </div>
                 <div class="contOptions">
                     <span class="opcion" onclick="embed(this,'#embed','/ingresar_vehiculo')">Ingresar vehículo</span>
-                    <span class="opcion">Mensual</span>
+                    <span class="opcion" onclick="embed(this,'#embed','/mensual')">Mensual</span>
                     <span class="opcion">Inventario</span>
                     <span class="opcion">Facturas</span>
                     <span class="opcion">Historial</span>
                     <span class="opcion">Sistema</span>
                 </div>
             </div>
-            <div class="expansor"></div>
-            <div class="workspace">
-                <embed class="embedWindow" id="embed" src="" type="text/html"></embed>
+            <div class="expansor" onclick="expCont(this,'#options','#workspace')"></div>
+            <div class="workspace" id="workspace">
+                <embed class="embedWindow" id="embed" src="{{ url_for('principal') }}" type="text/html"></embed>
             </div>
-        </div>
-    <!--h1>Panel de control: {{ sesions }}</h1-->    
+        </div>   
     {% endif %}
 </body>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+<script type="text/javascript">
+	document.getElementById("logotipo").onchange = function(e) {
+	  let reader = new FileReader();
+	  reader.readAsDataURL(e.target.files[0]);
+	  reader.onload = function(){
+	    let preview = document.getElementById('preview'),
+	            image = document.createElement('img');
+	            image.id = 'loc';
+	            image.style.maxWidth="250px";
+                image.style.maxHeight="150px";
+	            image.style.marginTop="15px";
+	    image.src = reader.result;
+	    preview.innerHTML = '';
+	    preview.append(image);
+	  };
+	}
+</script>
 </html>
 {% endif %}

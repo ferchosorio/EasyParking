@@ -1,12 +1,73 @@
 {% extends "index.html" %}
 {% block contenido %}
-
-<div class="loginForm">
-    <form action="{{ url_for('login') }}" method="post">
-        <input type="text" name="usuario" placeholder="Usuario">
-        <input type="text" name="contrasena" placeholder="Contraseña">
-        <input type="submit" value="Ingresar">
-    </form>
+{% if res == 1: %}
+<div class="passedL">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/ok.svg') }}" alt="Ok">
+    <h1>Registro realizado correctamente.</h1>
+    <button onclick="desWarn('.passedL')">Ok</button>
 </div>
-
+{% elif res == 0: %}
+<div class="noPassedL">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/wrong.svg') }}" alt="wrong">
+    <h1>No se ha podido registrar sus datos.</h1>
+    <button onclick="desWarn('.noPassedL')">Ok</button>
+</div>
+{% elif res == 2: %}
+<div class="noPassedL">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/wrong.svg') }}" alt="wrong">
+    <h1>Por favor, inicie sesión.</h1>
+    <button onclick="desWarn('.noPassedL')">Ok</button>
+</div>
+{% elif res == 3: %}
+<div class="noPassedL">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/wrong.svg') }}" alt="wrong">
+    <h1>Usuario o contraseña incorrectos.</h1>
+    <button onclick="desWarn('.noPassedL')">Ok</button>
+</div>
+{% elif res == 4: %}
+<div class="noPassedL">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/wrong.svg') }}" alt="wrong">
+    <h1>Ha ocurrido un error al iniciar sesión.</h1>
+    <button onclick="desWarn('.noPassedL')">Ok</button>
+</div>
+{% endif %}
+<div class="leftSide">
+    <h1>Bienvenido</h1>
+    <div class="icono">
+        <img src="{{ url_for('static',filename='assets/images/sec4/fondo.png') }}" alt="Fondo" class="fondo">
+        <img src="{{ url_for('static',filename='assets/images/sec4/auto.png') }}" alt="Auto" class="auto">
+        <img src="{{ url_for('static',filename='assets/images/sec4/engrane11.png') }}" style="margin: 10% 10% 45% 47%;" alt="Engrane" class="engrane1 engrane11">
+            <img src="{{ url_for('static',filename='assets/images/sec4/engrane22.png') }}" style="margin: 10% 10% 29% 69%;" alt="Engrane" class="engrane2">
+        <img src="{{ url_for('static',filename='assets/images/sec4/candado.png') }}" alt="Candado" class="ubic">
+        <img src="{{ url_for('static',filename='assets/images/sec4/woman.png') }}" alt="Personas" class="person2">
+        <img src="{{ url_for('static',filename='assets/images/sec4/man.png') }}" alt="Personas" class="person">
+    </div>
+</div>
+<div class="rightSide">
+    <section class="registerForm">
+        <span class="titles">Iniciar sesión</span>
+        <div class="contForm">
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="duoLineLogin">
+                    <div class="labl_inp">
+                        <label id="lb5">Nombre de usuario</label>
+                        <input type="text" name="usuario" placeholder="Nombre de usuario" autocomplete="off" required onfocus="lab(this,'#lb5')"  style="background-image: url(../static/assets/images/SVGS/user.svg);">
+                    </div>
+                    <div class="labl_inp">
+                        <label id="lb6">Contraseña</label>
+                        <input type="password" name="contrasena" placeholder="Contraseña" autocomplete="off" required onfocus="lab(this,'#lb6')"  style="background-image: url(../static/assets/images/SVGS/pass.svg);" id="inputPasw">
+                        <img src="{{ url_for('static',filename='assets/images/SVGS/eye1.svg') }}" alt="Eye" class="eye" onclick="show_password(this,'#inputPasw')">
+                    </div>
+                </div>
+                <input type="submit" value="Ingresar" class="btRegistro" style="margin: 12px auto 12px auto;">
+            </form>
+        </div>
+    </section>
+</div>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
 {% endblock %}

@@ -10,7 +10,8 @@
 <body>
     <div style="width: 100%;height: 100vh;display: flex;align-items: center;justify-content: center;flex-direction: column;">
         <h1>Vehículos ingresados</h1>
-        <table>
+        <input type="text" id="FiltrarContenido" placeholder="Buscar vehículo">
+        <table class="tabla">
             <tr>
                 <th>Id</th>
                 <th>Tipo</th>
@@ -21,12 +22,13 @@
                 <th>Accesorios</th>
                 <th>Entrada</th>
                 <th>Salida</th>
+                <th>Tiempo</th>
                 <th>Fecha</th>
                 <th>Valor</th>
                 <th>Usuario</th>
             </tr>
         {% for vehiculo in ing: %}
-            <tr>
+            <tr class="ve">
                 <td>{{ vehiculo.id }}</td>
                 <td>{{ vehiculo.tipo_de_vehiculo }}</td>
                 <td>{{ vehiculo.plaza }}</td>
@@ -38,11 +40,25 @@
                 <td>{{ vehiculo.hora_salida }}</td>
                 <td>{{ vehiculo.tiempo_total }}</td>
                 <td>{{ vehiculo.fecha }}</td>
-                <td>{{ vehiculo.valor_a_pagar }}</td>
+                <td>${{ "{0:,}".format(vehiculo.valor_a_pagar) }}</td>
                 <td>{{ vehiculo.usuario }}</td>
             </tr>
         {% endfor %}
         </table>
     </div>
 </body>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        (function($) {
+            $('#FiltrarContenido').keyup(function () {
+                var ValorBusqueda = new RegExp($(this).val(), 'i');
+                $('.ve').hide();
+                $('.ve').filter(function () {
+                    return ValorBusqueda.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+	});
+</script>
 </html>

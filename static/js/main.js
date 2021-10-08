@@ -74,3 +74,12 @@ function desWarn(r) {
 function salidaV(vehiculo) {
     location.href = "/salidaVehiculo/"+vehiculo;
 }
+function desplegar(e,opc){
+    let opci = document.querySelector(opc);
+    e.style.backgroundImage = "url(../../static/assets/images/SVGS/closeham.svg)";
+    opci.style.display = "flex";
+    e.addEventListener('click',()=>{
+        e.style.backgroundImage = "url(../../static/assets/images/SVGS/ham.svg)";
+        opci.style.display = "none";
+    });
+}

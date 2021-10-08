@@ -9,8 +9,8 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://tnvqatouijtntl:eaf31c805ffcbd53ebc53bd6d6e62672019c78a12f940ce1870d9d5e7b15bd53@ec2-34-205-14-168.compute-1.amazonaws.com:5432/da1hekglelf4b9'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
+#app.config['SQLALCHEMY_DATABASE_URI']='postgresql://tnvqatouijtntl:eaf31c805ffcbd53ebc53bd6d6e62672019c78a12f940ce1870d9d5e7b15bd53@ec2-34-205-14-168.compute-1.amazonaws.com:5432/da1hekglelf4b9'
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings

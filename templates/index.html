@@ -16,6 +16,16 @@
             <a onclick="accion('/inicioSesion')">Iniciar sesión</a>
             <a onclick="accion('/signup')">Registrarme</a>
             <a onclick="accion('/')">Soporte</a>
+        </div>
+        <div class="navBarMobile">
+            <span class="subt">Easy Parking</span>
+            <span class="hamb" onclick="desplegar(this,'.opciones')"></span>
+            <div class="opciones">
+                <a onclick="accion('/')">Inicio</a>
+                <a onclick="accion('/inicioSesion')">Iniciar sesión</a>
+                <a onclick="accion('/signup')">Registrarme</a>
+                <a onclick="accion('/')">Soporte</a>
+            </div>
         </div> 
         {% block contenido %} {% endblock %}
     </div>

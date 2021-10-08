@@ -443,6 +443,12 @@ def controlPanel():
 def ingresoVehiculo(par = None):
     return render_template("ingreso_vehiculo.html", usr = session['usu'],res = par)
 
+@app.route("/borrar/<ids>")
+def borrar(ids):
+    dels = vehicles.query.filter_by(id=ids).first()
+    db.session.delete(dels)
+    db.session.commit()
+    return redirect("/ingresados")
 #Continuar con funciones del sistema
 
 @app.errorhandler(404)

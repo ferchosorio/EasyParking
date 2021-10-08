@@ -787,6 +787,11 @@ body {
 .colo {
     width: 70px;
 }
+.delete {
+    max-width: 25px;
+    max-height: 25px;
+    cursor: pointer;
+}
 @media screen and (max-width: 600px) {
     .navBar {
         display: none;

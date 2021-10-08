@@ -15,17 +15,18 @@
             <tr>
                 <th>Id</th>
                 <th>Tipo</th>
-                <th>Plaza</th>
+                <th>Pl</th>
                 <th>Placa</th>
                 <th>Color</th>
                 <th>Propietario</th>
-                <th>Accesorios</th>
+                <th>Acc.</th>
                 <th>Entrada</th>
                 <th>Salida</th>
                 <th>Tiempo</th>
                 <th>Fecha</th>
                 <th>Valor</th>
                 <th>Usuario</th>
+                <th>Ops.</th>
             </tr>
         {% for vehiculo in ing: %}
             <tr class="ve">
@@ -33,7 +34,7 @@
                 <td>{{ vehiculo.tipo_de_vehiculo }}</td>
                 <td>{{ vehiculo.plaza }}</td>
                 <td>{{ vehiculo.placa }}</td>
-                <td>{{ vehiculo.color }}</td>
+                <td style="background-color: {{ vehiculo.color }};"></td>
                 <td>{{ vehiculo.propietario }}</td>
                 <td>{{ vehiculo.accesorios }}</td>
                 <td>{{ vehiculo.hora_entrada }}</td>
@@ -42,6 +43,7 @@
                 <td>{{ vehiculo.fecha }}</td>
                 <td>${{ "{0:,}".format(vehiculo.valor_a_pagar) }}</td>
                 <td>{{ vehiculo.usuario }}</td>
+                <td><a href="/borrar/{{ vehiculo.id }}"><img class="delete" src="{{ url_for('static',filename='assets/images/SVGS/del.svg') }}" alt=""></a></td>
             </tr>
         {% endfor %}
         </table>

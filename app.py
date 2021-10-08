@@ -10,7 +10,7 @@ import os
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://hilelsovsnwegz:b336a4b3981aaccdbe05c83e72138f82808fee4d482e0f8d7de7e60fbb74ec3c@ec2-52-86-123-180.compute-1.amazonaws.com:5432/dc0i6fl5dot7rm'
+app.config['SQLALCHEMY_DATABASE_URI']='postgres://tnvqatouijtntl:eaf31c805ffcbd53ebc53bd6d6e62672019c78a12f940ce1870d9d5e7b15bd53@ec2-34-205-14-168.compute-1.amazonaws.com:5432/da1hekglelf4b9'
 #Credenciales de configuración de la base de datos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #Propiedad para evitar warnings

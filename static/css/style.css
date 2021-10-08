@@ -707,8 +707,8 @@ body {
     transform: scale(1.08);
 }
 .vcolor {
-    width: 20px;
-    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
     position: absolute;
     border-radius: 50%;
     top: 8px;

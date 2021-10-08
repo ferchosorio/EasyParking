@@ -71,6 +71,16 @@
             <a onclick="accion('/panel/{{ sesions }}')">Información</a>
             <a onclick="accion('/panel/{{ sesions }}')">Perfil</a>
         </div>
+        <div class="navBarMobile">
+            <span class="subt">Easy Parking</span>
+            <span class="hamb" onclick="desplegar(this,'.opciones')"></span>
+            <div class="opciones">
+                <a onclick="accion('/panel/{{ sesions }}')">Principal</a>
+                <a onclick="embed(this,'#embed','/ingresados','.hamb')">Ingresados</a>
+                <a onclick="accion('/panel/{{ sesions }}')">Información</a>
+                <a onclick="accion('/panel/{{ sesions }}')">Perfil</a>
+            </div>
+        </div>
     </div>
         <div class="panelControl">
             <div class="options" id="options">
@@ -78,8 +88,8 @@
                     <div class="profile" style="background-image: url({{ url_for('static',filename='/assets/images/Subidas/') }}{{ logo }});"></div>
                 </div>
                 <div class="contOptions">
-                    <span class="opcion" onclick="embed(this,'#embed','/ingresar_vehiculo')">Ingresar vehículo</span>
-                    <span class="opcion" onclick="embed(this,'#embed','/mensual')">Mensual</span>
+                    <span class="opcion" onclick="embed(this,'#embed','/ingresar_vehiculo','.expansor')">Ingresar vehículo</span>
+                    <span class="opcion" onclick="embed(this,'#embed','/mensual','.expansor')">Mensual</span>
                     <span class="opcion">Inventario</span>
                     <span class="opcion">Facturas</span>
                     <span class="opcion">Historial</span>
@@ -92,6 +102,7 @@
             </div>
         </div>   
     {% endif %}
+    <input type="file" name="logotipo" id="logotipo" style="display: none;" disabled>
 </body>
 <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 <script type="text/javascript">
@@ -110,6 +121,11 @@
 	    preview.append(image);
 	  };
 	}
+    window.onload = () => {
+        if (window.screen.width <= 600) {
+            document.querySelector('.expansor').click()
+        }
+    }
 </script>
 </html>
 {% endif %}

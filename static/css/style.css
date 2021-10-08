@@ -784,6 +784,9 @@ body {
 .navBarMobile {
     display: none;
 }
+.colo {
+    width: 70px;
+}
 @media screen and (max-width: 600px) {
     .navBar {
         display: none;
@@ -871,6 +874,28 @@ body {
         flex-direction: column;
     }
     .contenidos .leftSide,.contenidos .rightSide {
+        width: 100%;
+    }
+    .options {
+        width: 100%;
+    }
+    .workspace {
+        width: 0%;
+    }
+    .expansor {
+        left: 85%;
+    }
+    .espacio {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .espacio .leftSide,
+    .espacio .rightSide {
+        width: 100%;
+    }
+    .contForma {
         width: 100%;
     }
 }

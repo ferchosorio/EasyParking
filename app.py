@@ -426,7 +426,7 @@ def principal(vl=None):
     cos = db.session.query(vehicles).filter(
         vehicles.hora_salida == "0:0:0"
     )
-    co = db.session.execute("SELECT count(id) as c FROM vehicles").scalar()
+    co = db.session.execute("SELECT count(id) as c FROM vehicles WHERE hora_salida='0:0:0'").scalar()
     return render_template("principal.html",vehics=cos,vals = vl,cs = co)
 
 @app.route("/mensual")

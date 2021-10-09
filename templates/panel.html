@@ -64,12 +64,16 @@
     </div>
     {% else: %}
     <div class="contenidos">
+        <div class="cajon" onmouseleave="opcPerfil('a','.cajon')">
+            <span class="ops">Mi perfil</span>
+            <span class="ops" onclick="cerrarSesion('{{ sesions }}')">Cerrar sesión</span>
+        </div>
         <div class="navBar">
             <span class="subt">Easy Parking</span>
             <a onclick="accion('/panel/{{ sesions }}')">Principal</a>
             <a onclick="embed(this,'#embed','/ingresados')">Ingresados</a>
             <a onclick="accion('/panel/{{ sesions }}')">Información</a>
-            <a onclick="accion('/panel/{{ sesions }}')">Perfil</a>
+            <a onmouseover="opcPerfil('{{ sesions }}','.cajon')">Perfil</a>
         </div>
         <div class="navBarMobile">
             <span class="subt">Easy Parking</span>

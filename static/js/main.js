@@ -104,3 +104,15 @@ function desplegar(e,opc){
         }
     });
 }
+function opcPerfil(a,caja){
+    var cajas = document.querySelector(caja);
+    if (a != "a") {
+        cajas.style.display = "flex";
+    }
+    else {
+        cajas.style.display = "none";
+    }
+}
+function cerrarSesion(ses){
+    location.href = "/cerrarSesion/"+ses;
+}

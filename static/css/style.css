@@ -792,6 +792,35 @@ body {
     max-height: 25px;
     cursor: pointer;
 }
+.cajon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 200px;
+    background-color: var(--azul);
+    transition: all .7s ease-in-out;
+    position: absolute;
+    top: 11vh;
+    right: 2rem;
+    border-radius: 12px;
+    flex-direction: column;
+}
+.ops {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.ops:hover {
+    background-color: #00000070;
+    transition: all .7s ease-in-out;
+}
 @media screen and (max-width: 600px) {
     .navBar {
         display: none;

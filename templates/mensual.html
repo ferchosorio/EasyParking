@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Mensual | Easy Parking</title>
+</head>
+<body>
+    <div class="espacio">
+        <div class="leftSide">
+            <div class="contForma">
+                <h1 style="color: #101010;">Mensual</h1>
+                <form action="{{ url_for('inMensual') }}" method="post" enctype="multipart/form-data">
+                    <select name="tipoV" class="slct">
+                        <option value="Motocicleta" selected>Motocicleta</option>
+                        <option value="Automovil">Automovil</option>
+                        <option value="Camioneta">Camioneta</option>
+                        <option value="Camion">Camión</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label id="lb5">Nombre de propietario</label>
+                            <input type="text" name="propietario" placeholder="Nombre de propietario" autocomplete="off" required onfocus="lab(this,'#lb5')"  style="background-image: url(../static/assets/images/SVGS/user.svg);">
+                        </div>
+                        <div class="labl_inp">
+                            <label id="lb6">Placa</label>
+                            <input id="inp" type="text" name="placa" placeholder="Placa" autocomplete="off" required onfocus="lab(this,'#lb6')"  style="background-image: url(../static/assets/images/SVGS/car.svg);text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div class="duoLine" style="display: flex;flex-direction: row;">
+                        <label style="opacity: 1;">Color: </label>
+                        <input type="color" name="color" placeholder="Color">
+                        <label class="btlogo" for="foto" style="opacity: 1;">Fotografía</label>
+                        <input type="file" name="foto" id="foto" style="display: none;">
+                    </div>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label id="lb7">Plaza: </label>
+                            <input type="number" name="plaza" placeholder="Plaza" autocomplete="off" required onfocus="lab(this,'#lb7')"  style="background-image: url(../static/assets/images/SVGS/identification.svg);">
+                        </div>
+                        <div class="labl_inp">
+                            <label id="lb8">Valor a pagar: </label>
+                            <input type="text" name="valorPagar" placeholder="Valor a pagar" autocomplete="off" required onfocus="lab(this,'#lb6')"  style="background-image: url(../static/assets/images/SVGS/car.svg);">
+                        </div>
+                    </div>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label style="opacity: 1;">Fecha de salida: </label>
+                            <input type="date" name="fechaSalida" required style="width: 150px;margin:15px;">
+                        </div>
+                        <input type="submit" value="Registrar" class="btRegistro">
+                    </div>
+                </form>
+                <div id="preview" style="bottom: 3rem;left: 2rem;position: absolute;"></div>
+            </div>
+        </div>
+        <div class="rightSide">
+            <div class="registradosMes">
+                <table class="tabla" style="width: auto;">
+                    <tr>
+                        <th>Propietario</th>
+                        <th>Placa</th>
+                        <th>Tipo</th>
+                        <th>Color</th>
+                        <th>Foto</th>
+                        <th>Plaza</th>
+                        <th>Pago</th>
+                        <th>F. Entrada</th>
+                        <th>F. Salida</th>
+                    </tr>
+                {% for dat in dats: %}
+                    <tr>
+                        <td>{{ dat.propietario }}</td>
+                        <td>{{ dat.placa }}</td>
+                        <td>{{ dat.tipo_de_vehiculo }}</td>
+                        <td style="background-color: {{ dat.color }};"></td>
+                        <td style="background-image: url({{ url_for('static',filename='/assets/images/Subidas/') }}{{ dat.fotografia }});background-size:100%;"></td>
+                        <td>{{ dat.plaza }}</td>
+                        <td>${{ dat.valor_a_pagar }}</td>
+                        <td>{{ dat.fecha_entrada }}</td>
+                        <td>{{ dat.fecha_salida }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+	document.getElementById("foto").onchange = function(e) {
+	  let reader = new FileReader();
+	  reader.readAsDataURL(e.target.files[0]);
+	  reader.onload = function(){
+	    let preview = document.getElementById('preview'),
+	            image = document.createElement('img');
+	            image.id = 'loc';
+	            image.style.maxWidth="150px";
+                image.style.maxHeight="50px";
+	            image.style.marginTop="15px";
+	    image.src = reader.result;
+	    preview.innerHTML = '';
+	    preview.append(image);
+	  };
+	}
+	$('#inp').on('keyup',Principal);
+	function Principal(){
+	    var flag1 = true;
+	    $(document).on('keyup','[id=inp]',function(e){
+	        if($(this).val().length == 3 && flag1) {
+	            $(this).val($(this).val()+"-");
+	            flag1 = true;
+	        }
+	        else if($(this).val().length == 7 && flag1) {
+	            $(this).val($(this).val()+"");
+	            flag1 = false;
+	        }
+	    });
+	}
+</script>
+</html>

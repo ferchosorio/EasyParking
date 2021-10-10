@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 | Easy Parking</title>
+</head>
+<body>
+    <div class="conError">
+        {% if errors == 404: %}
+        <div class="icono">
+            <img src="{{ url_for('static',filename='assets/images/sec404/fondo.png') }}" alt="Fondo" class="fondo">
+            <img src="{{ url_for('static',filename='assets/images/sec404/warning.png') }}" alt="Auto" class="auto">
+            <img src="{{ url_for('static',filename='assets/images/sec404/exclamacion.png') }}" alt="Engrane" class="moneda3">
+            <img src="{{ url_for('static',filename='assets/images/sec404/engraneA.png') }}" alt="Moneda" class="moneda1">
+            <img src="{{ url_for('static',filename='assets/images/sec404/engraneB.png') }}" alt="Moneda" class="moneda2">
+            <img src="{{ url_for('static',filename='assets/images/sec404/man.png') }}" alt="Personas" class="person">
+        </div>
+        <h1>La página que buscas no existe</h1>
+        {% elif errors == 405: %}
+        <div class="icono">
+            <img src="{{ url_for('static',filename='assets/images/sec404/fondo.png') }}" alt="Fondo" class="fondo">
+            <img src="{{ url_for('static',filename='assets/images/sec404/warning405.png') }}" alt="Auto" class="auto">
+            <img src="{{ url_for('static',filename='assets/images/sec404/exclamacion.png') }}" alt="Engrane" class="moneda3">
+            <img src="{{ url_for('static',filename='assets/images/sec404/engraneA.png') }}" alt="Moneda" class="moneda1">
+            <img src="{{ url_for('static',filename='assets/images/sec404/engraneB.png') }}" alt="Moneda" class="moneda2">
+            <img src="{{ url_for('static',filename='assets/images/sec404/man.png') }}" alt="Personas" class="person">
+        </div>
+        <h1>La ruta ingresada no fué encontrada</h1>
+        {% endif %}
+    </div>
+</body>
+</html>

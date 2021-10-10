@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de control | Easy Parking</title>
+</head>
+<body>
+{% if res == 1: %}
+<div class="passed">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/ok.svg') }}" alt="Ok">
+    <h1>Vehiculo ingresado con èxito.</h1>
+</div>
+{% elif res == 0: %}
+<div class="noPassed">
+    <span>Easy Parking</span>
+    <img src="{{ url_for('static',filename='assets/images/SVGS/wrong.svg') }}" alt="wrong">
+    <h1>No se ha podido ingresar el vehículo.</h1>
+</div>
+{% endif %}
+<div class="espacio">
+    <div class="leftSide">
+        <div class="icono">
+            <img src="{{ url_for('static',filename='assets/images/sec2/fondo.png') }}" alt="Fondo" class="fondo">
+            <img src="{{ url_for('static',filename='assets/images/sec2/auto.png') }}" alt="Auto" class="auto">
+            <img src="{{ url_for('static',filename='assets/images/sec2/m1.png') }}" alt="Moneda" class="moneda1">
+            <img src="{{ url_for('static',filename='assets/images/sec2/m2.png') }}" alt="Moneda" class="moneda2">
+            <img src="{{ url_for('static',filename='assets/images/sec2/m3.png') }}" alt="Moneda" class="moneda3">
+            <img src="{{ url_for('static',filename='assets/images/sec2/m4.png') }}" alt="Moneda" class="moneda1">
+            <img src="{{ url_for('static',filename='assets/images/sec2/woman.png') }}" alt="Personas" class="person">
+            <img src="{{ url_for('static',filename='assets/images/sec2/man.png') }}" alt="Personas" class="person2">
+        </div>
+    </div>
+    <div class="rightSide">
+        <section class="registerForm">
+            <h1>Ingreso de vehículos</h1>
+            <div class="contForma">
+                <form action="{{ url_for('vehiculos') }}" method="post">
+                    <label>Tipo de vehículo: </label>
+                    <select name="tipoV" class="slct">
+                        <option value="Motocicleta" selected>Motocicleta</option>
+                        <option value="Automovil">Automovil</option>
+                        <option value="Camioneta">Camioneta</option>
+                        <option value="Camion">Camión</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label id="lb2">Número de plaza: </label>
+                            <input type="number" name="plaza" placeholder="Número de plaza" autocomplete="off" required onfocus="lab(this,'#lb2')" style="background-image: url(../static/assets/images/SVGS/identification.svg);">
+                        </div>
+                        <div class="labl_inp">
+                            <label id="lb3">Placa de vehículo</label>
+                            <input id="inp" type="text" name="placa" placeholder="Placa de vehículo" autocomplete="off" required onfocus="lab(this,'#lb3')" style="background-image: url(../static/assets/images/SVGS/car.svg);text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label style="opacity: 1;">Color</label>
+                            <input type="color" name="color" placeholder="Identificación" required class="colo" value="#101010">
+                        </div>
+                        <div class="labl_inp">
+                            <label id="lb1">Propietario</label>
+                            <input type="text" name="propietario" placeholder="Propietario" autocomplete="off" required onfocus="lab(this,'#lb1')" style="background-image: url(../static/assets/images/SVGS/user.svg);">
+                        </div>
+                    </div>
+                    <label style="margin: 15px;">Accesorios: </label>
+                    <div class="duoLine">
+                        <div class="labl_inp">
+                            <label style="opacity: 1;">Si</label>
+                            <input type="radio" name="accesorios" value="SI">
+                        </div>
+                        <div class="labl_inp">
+                            <label style="opacity: 1;">No</label>
+                            <input type="radio" name="accesorios" value="NO">
+                        </div>
+                    </div>
+                    <input type="submit" value="Ingresar" class="btRegistro" style="margin:30px 10px 10px 10px;">
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+	$('#inp').on('keyup',Principal);
+	function Principal(){
+	    var flag1 = true;
+	    $(document).on('keyup','[id=inp]',function(e){
+	        if($(this).val().length == 3 && flag1) {
+	            $(this).val($(this).val()+"-");
+	            flag1 = true;
+	        }
+	        else if($(this).val().length == 7 && flag1) {
+	            $(this).val($(this).val()+"");
+	            flag1 = false;
+	        }
+	    });
+	}
+</script>
+</html>

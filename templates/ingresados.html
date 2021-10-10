@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresados</title>
+</head>
+<body>
+    <div style="width: 100%;height: 100vh;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+        <h1>Vehículos ingresados</h1>
+        <input type="text" id="FiltrarContenido" placeholder="Buscar vehículo">
+        <table class="tabla">
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Pl</th>
+                <th>Placa</th>
+                <th>Color</th>
+                <th>Propietario</th>
+                <th>Acc.</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Tiempo</th>
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>Usuario</th>
+                <th>Ops.</th>
+            </tr>
+        {% for vehiculo in ing: %}
+            <tr class="ve">
+                <td>{{ vehiculo.id }}</td>
+                <td>{{ vehiculo.tipo_de_vehiculo }}</td>
+                <td>{{ vehiculo.plaza }}</td>
+                <td>{{ vehiculo.placa }}</td>
+                <td style="background-color: {{ vehiculo.color }};"></td>
+                <td>{{ vehiculo.propietario }}</td>
+                <td>{{ vehiculo.accesorios }}</td>
+                <td>{{ vehiculo.hora_entrada }}</td>
+                <td>{{ vehiculo.hora_salida }}</td>
+                <td>{{ vehiculo.tiempo_total }}</td>
+                <td>{{ vehiculo.fecha }}</td>
+                <td>${{ "{0:,}".format(vehiculo.valor_a_pagar) }}</td>
+                <td>{{ vehiculo.usuario }}</td>
+                <td><a href="/borrar/{{ vehiculo.id }}"><img class="delete" src="{{ url_for('static',filename='assets/images/SVGS/del.svg') }}" alt=""></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</body>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        (function($) {
+            $('#FiltrarContenido').keyup(function () {
+                var ValorBusqueda = new RegExp($(this).val(), 'i');
+                $('.ve').hide();
+                $('.ve').filter(function () {
+                    return ValorBusqueda.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+	});
+</script>
+</html>

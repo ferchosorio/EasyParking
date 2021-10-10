@@ -6,16 +6,26 @@
     <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio | Easy Parking</title>
+    <title>Easy Parking</title>
 </head>
 <body>
     <div class="contenidos">
         <div class="navBar">
             <span class="subt">Easy Parking</span>
-            <a onclick="accion('/#')">Inicio</a>
-            <a onclick="accion('/#')">Iniciar sesión</a>
+            <a onclick="accion('/')">Inicio</a>
+            <a onclick="accion('/inicioSesion')">Iniciar sesión</a>
             <a onclick="accion('/signup')">Registrarme</a>
-            <a onclick="accion('/#')">Soporte</a>
+            <a onclick="accion('/')">Soporte</a>
+        </div>
+        <div class="navBarMobile">
+            <span class="subt">Easy Parking</span>
+            <span class="hamb" onclick="desplegar(this,'.opciones')"></span>
+            <div class="opciones">
+                <a onclick="accion('/')">Inicio</a>
+                <a onclick="accion('/inicioSesion')">Iniciar sesión</a>
+                <a onclick="accion('/signup')">Registrarme</a>
+                <a onclick="accion('/')">Soporte</a>
+            </div>
         </div> 
         {% block contenido %} {% endblock %}
     </div>

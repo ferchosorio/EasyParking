@@ -16,18 +16,28 @@
     <h1>Vehiculo ingresado con èxito.
     <span class="dsit">Desea imprimir el ticket?</span></h1>
     <div class="btnsFac">
-        <button id="factura" onclick="impFactura('.contenedorFactura')">Si</button>
+        <button id="factura" onclick="impFactura('.contenedorFactura','#closeFac')">Si</button>
         <button id="noFactura">No</button>
     </div>
 </div>
 <div class="contenedorFactura">
     <div class="factura">
+        <span id="closeFac"></span>
+        {% for p in dats: %}
+            <span class="titFac">{{ p.nombreParq }}</span>
+            <img src="{{ url_for('static',filename='/assets/images/Subidas/') }}{{ p.logotipo }}" alt="Logotipo" class="lgtp">
+        {% endfor %}
+        {% for t in tel: %}
+            <span class="telf">{{ t.telefono }}</span>
+        {% endfor %}
         {% for r in bars: %}
-            <span><b>Placa: </b>{{ r.placa }}</span>
-            <span><b>Tipo: </b>{{ r.tipo_de_vehiculo }}</span>
-            <span><b>Hora de entrada: </b>{{ r.hora_entrada }}</span>
-            <span id="bars">{{ r.barras }}</span>
-            <img src="" alt="" id="codB">
+            <div class="datsVeh">
+                <span><b>Placa: </b>{{ r.placa }}</span>
+                <span><b>Tipo: </b>{{ r.tipo_de_vehiculo }}</span>
+                <span><b>Hora de entrada: </b>{{ r.hora_entrada }}</span>
+                <span id="bars">{{ r.barras }}</span>
+                <img src="" alt="Código de barras" id="codB">
+            </div>
         {% endfor %}
     </div>
 </div>

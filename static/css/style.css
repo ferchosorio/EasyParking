@@ -876,6 +876,51 @@ body {
     align-items: center;
     justify-content: center;
 }
+.titFac {
+    font-size: 1.1em;
+}
+.lgtp {
+    max-width: 60px;
+    max-height: 60px;
+}
+.telf {
+    font-size: 0.7em;
+}
+#bars {
+    display: none;
+}
+.datsVeh {
+    width: 90%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.datsVeh span {
+    font-size: 14px;
+}
+.datsVeh img {
+    max-width: 200px;
+    max-height: 200px;
+    display: flex;
+    margin: 0 auto 0 auto;
+}
+#closeFac {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    position: absolute;
+    top: 0%;
+    left: 5%;
+    z-index: 5;
+    cursor: pointer;
+    background-image: url(../assets/images/SVGS/close.svg);
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
 @media screen and (max-width: 600px) {
     .navBar {
         display: none;

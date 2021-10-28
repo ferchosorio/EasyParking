@@ -485,10 +485,12 @@ def ingresoVehiculo(par = None,barras = None):
     if not session:
         return inicioSesion()
     else:
+        telf = db.session.query(administration.telefono).all()
+        pardats = db.session.query(easy_parking).all()
         codg = db.session.query(vehicles).filter(
             vehicles.placa == barras
         )
-        return render_template("ingreso_vehiculo.html", usr = session['usu'],res = par,bars = codg)
+        return render_template("ingreso_vehiculo.html", usr = session['usu'],res = par,bars = codg,tel = telf, dats = pardats)
 
 @app.route("/cerrarSesion/<ses>")
 def cerrarSesion(ses):

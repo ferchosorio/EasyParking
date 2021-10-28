@@ -581,6 +581,34 @@ body {
     margin: 0;
     border-radius: 0px 0px 12px 12px;
 }
+.passed .dsit {
+    position: absolute;
+    top: 68%;
+    color: #101010;
+    font-size: 15px;
+}
+.passed .btnsFac {
+    position: absolute;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.passed .btnsFac #factura,
+.passed .btnsFac #noFactura {    
+    margin: 10px;
+    padding: 4px;
+    width: 45px;
+    border: 0;
+    background-color: #00bfad;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.passed .btnsFac #noFactura {
+    background-color: #e91e63;
+}
 .passed img,
 .noPassed img,
 .passedL img,
@@ -623,6 +651,24 @@ body {
     transition: all .8s ease-in-out;
     background-color: var(--azul);
     color: #fff;
+}
+.contenedorFactura {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 4;
+    background-color: #eeeeee;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.factura {
+    width: 30%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 .conten {
     width: 100%;

@@ -13,7 +13,23 @@
 <div class="passed">
     <span>Easy Parking</span>
     <img src="{{ url_for('static',filename='assets/images/SVGS/ok.svg') }}" alt="Ok">
-    <h1>Vehiculo ingresado con èxito.</h1>
+    <h1>Vehiculo ingresado con èxito.
+    <span class="dsit">Desea imprimir el ticket?</span></h1>
+    <div class="btnsFac">
+        <button id="factura" onclick="impFactura('.contenedorFactura')">Si</button>
+        <button id="noFactura">No</button>
+    </div>
+</div>
+<div class="contenedorFactura">
+    <div class="factura">
+        {% for r in bars: %}
+            <span><b>Placa: </b>{{ r.placa }}</span>
+            <span><b>Tipo: </b>{{ r.tipo_de_vehiculo }}</span>
+            <span><b>Hora de entrada: </b>{{ r.hora_entrada }}</span>
+            <span id="bars">{{ r.barras }}</span>
+            <img src="" alt="" id="codB">
+        {% endfor %}
+    </div>
 </div>
 {% elif res == 2: %}
 <div class="noPassed">
@@ -109,5 +125,9 @@
 	        }
 	    });
 	}
+    window.onload = (()=>{
+        var bars = document.querySelector('#bars').innerText;
+        document.querySelector('#codB').src = bars;
+    });
 </script>
 </html>

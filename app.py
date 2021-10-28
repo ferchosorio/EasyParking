@@ -43,15 +43,16 @@ def horaActual():
 
 def codigoBarras(serie):
     identify = random.randint(1000,10000000)
-    ruta = "static/assets/images/codigo_barras"
+    ruta = "static/assets/images/codigo_barras/"+str(identify)+".png"
     crear = EAN13Encoder(serie)
-    crear.save(ruta+str(identify))
-    return f"{ruta}/{identify}"
+    crear.save(ruta)
+    return f"{ruta}"
 
 class easy_parking(db.Model):
     __tablename__ = 'easy_parking'
     id = db.Column(db.Integer, primary_key=True)
     administrador = db.Column(db.String(100))
+    nombreParq = db.Column(db.String(100))
     numero_plazas = db.Column(db.Integer)
     tMoto = db.Column(db.Integer)
     tAuto = db.Column(db.Integer)
@@ -59,8 +60,9 @@ class easy_parking(db.Model):
     tOtro = db.Column(db.Integer)
     logotipo = db.Column(db.String(256))
 
-    def __init__(self,administrador,numero_plazas,tMoto,tAuto,tCamion,tOtro,logotipo):
+    def __init__(self,administrador,nombreParq,numero_plazas,tMoto,tAuto,tCamion,tOtro,logotipo):
         self.administrador = administrador
+        self.nombreParq = nombreParq
         self.numero_plazas = numero_plazas
         self.tMoto = tMoto
         self.tAuto = tAuto
@@ -70,7 +72,7 @@ class easy_parking(db.Model):
 #Clase para la tabla Easy_parking
 class easy_parkingSchema(ma.Schema):
     class Meta:
-        campos = ('id','administrador','numero_plazas','tMoto','tAuto','tCamion','tOtro','logotipo')
+        campos = ('id','administrador','nombreParq','numero_plazas','tMoto','tAuto','tCamion','tOtro','logotipo')
 #Clase para el esquema de la tabla Easy_parking
 
 easy_parking_schema = easy_parkingSchema()
@@ -257,6 +259,7 @@ def configurar():
     if request.method == "POST":
         try:
             administrador = session['usu']
+            nombreParqueadero = request.form['nombre_parqueadero']
             numero_plazas = request.form['numero_plazas']
             tMoto = request.form['tarifaMoto']
             tAuto = request.form['tarifaAuto']
@@ -271,7 +274,7 @@ def configurar():
                 filename = "default_logo.png"
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-            first_config = easy_parking(administrador,numero_plazas,tarMoto,tarAuto,tarCamion,tarOtro,filename)
+            first_config = easy_parking(administrador,nombreParqueadero,numero_plazas,tarMoto,tarAuto,tarCamion,tarOtro,filename)
             db.session.add(first_config)
             db.session.commit()
             return redirect(f"/panel/{administrador}")
@@ -330,7 +333,7 @@ def vehiculos():
             return ingresoVehiculo(2)
         else:
             try:
-                serieBarras = random.randint(100000,10000000)
+                serieBarras = random.randint(100000000000,999999999999)
                 tipoVehiculo = request.form['tipoV']
                 placa = request.form['placa']
                 color = request.form['color']
@@ -346,7 +349,7 @@ def vehiculos():
                 newVehicles = vehicles(tipoVehiculo,plaza,placa,color,propietario,accesorios,horaEntrada,horaSalida,tiempoTotal,fechaA,pagar,codBarras,usuario)
                 db.session.add(newVehicles)
                 db.session.commit()
-                return ingresoVehiculo(1)
+                return ingresoVehiculo(1,placa)
             except:
                 return ingresoVehiculo(0)
 
@@ -420,7 +423,6 @@ def salidaVehiculo(elem):
             #db.session.delete(dels)
             db.session.commit()
         return principal(valor)
-        #return f"Tiempo: {tiempoT} == Minutos: {Tmins} == a pagar ${round(valor)}"
 
 @app.route("/inMensual", methods=['POST'])
 def inMensual():
@@ -443,32 +445,50 @@ def inMensual():
 
 @app.route("/principal")
 def principal(vl=None):
-    cos = db.session.query(vehicles).filter(
-        vehicles.hora_salida == "0:0:0"
-    )
-    co = db.session.execute("SELECT count(id) as c FROM vehicles WHERE hora_salida='0:0:0'").scalar()
-    return render_template("principal.html",vehics=cos,vals = vl,cs = co)
+    if not session:
+        return inicioSesion()
+    else:
+        cos = db.session.query(vehicles).filter(
+            vehicles.hora_salida == "0:0:0"
+        )
+        co = db.session.execute("SELECT count(id) as c FROM vehicles WHERE hora_salida='0:0:0'").scalar()
+        return render_template("principal.html",vehics=cos,vals = vl,cs = co)
 
 @app.route("/mensual")
 def mensualidad():
-    consu = db.session.query(monthly).all()
-    return render_template("mensual.html",dats = consu)
+    if not session:
+        return inicioSesion()
+    else:
+        consu = db.session.query(monthly).all()
+        return render_template("mensual.html",dats = consu)
 
 @app.route("/inventario")
 def inventarioVehiculos():
-    consulta_vehiculos = db.session.query(vehicles).filter(
-        vehicles.hora_salida == '0:0:0'
-    )
-    return render_template("inventario.html",consulta=consulta_vehiculos)
+    if not session:
+        return inicioSesion()
+    else:
+        consulta_vehiculos = db.session.query(vehicles).filter(
+            vehicles.hora_salida == '0:0:0'
+        )
+        return render_template("inventario.html",consulta=consulta_vehiculos)
 
 @app.route("/controlPanel")
 def controlPanel():
-    return render_template("controlPanel.html")
+    if not session:
+        return inicioSesion()
+    else:
+        return render_template("controlPanel.html")
 #Panel de control de funciones del sistema
 
 @app.route("/ingresar_vehiculo")
-def ingresoVehiculo(par = None):
-    return render_template("ingreso_vehiculo.html", usr = session['usu'],res = par)
+def ingresoVehiculo(par = None,barras = None):
+    if not session:
+        return inicioSesion()
+    else:
+        codg = db.session.query(vehicles).filter(
+            vehicles.placa == barras
+        )
+        return render_template("ingreso_vehiculo.html", usr = session['usu'],res = par,bars = codg)
 
 @app.route("/cerrarSesion/<ses>")
 def cerrarSesion(ses):

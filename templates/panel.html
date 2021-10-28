@@ -31,6 +31,10 @@
                 <section class="registerForm">
                     <h1>Configurar Easy Parking</h1>
                     <form action="{{ url_for('configurar') }}" method="post" enctype="multipart/form-data">
+                        <div class="labl_inp">
+                            <label id="lbs">Nombre de parqueadero: </label>
+                            <input type="text" name="nombre_parqueadero" placeholder="Nombre de parqueadero" autocomplete="off" required onfocus="lab(this,'#lbs')" style="background-image: url(../static/assets/images/SVGS/user.svg);">
+                        </div>
                         <div class="duoLine">
                             <div class="labl_inp">
                                 <label id="lb1">Número de plazas: </label>

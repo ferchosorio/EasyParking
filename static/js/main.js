@@ -78,8 +78,11 @@ function expCont(e,opciones,espacio){
         }
     });
 }
+function impFactura(fac) {
+    document.querySelector(fac).style.display="flex";
+}
 setTimeout(()=>{
-    if (document.querySelector(".passed") || document.querySelector(".noPassed")){
+    if (document.querySelector(".noPassed")){
         location.href = "/principal";
     }
 },4000);

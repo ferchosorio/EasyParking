@@ -325,6 +325,19 @@ def panel(sesion):
 def vehiculos():
     if request.method == "POST":
         plaza = request.form['plaza']
+        serieBarras = random.randint(100000000000,999999999999)
+        tipoVehiculo = request.form['tipoV']
+        placa = request.form['placa']
+        color = request.form['color']
+        propietario = request.form['propietario']
+        accesorios = request.form['accesorios']
+        usuario = session['usu']
+        horaEntrada = horaActual()
+        horaSalida = "0:0:0"
+        tiempoTotal = 0
+        fechaA = fechaActual()
+        pagar = 0
+        codBarras = codigoBarras(str(serieBarras))
         verifPlaza = db.session.query(vehicles.plaza).filter(
             vehicles.plaza == plaza
         )
@@ -333,19 +346,6 @@ def vehiculos():
             return ingresoVehiculo(2)
         else:
             try:
-                serieBarras = random.randint(100000000000,999999999999)
-                tipoVehiculo = request.form['tipoV']
-                placa = request.form['placa']
-                color = request.form['color']
-                propietario = request.form['propietario']
-                accesorios = request.form['accesorios']
-                usuario = session['usu']
-                horaEntrada = horaActual()
-                horaSalida = "0:0:0"
-                tiempoTotal = 0
-                fechaA = fechaActual()
-                pagar = 0
-                codBarras = codigoBarras(str(serieBarras))
                 newVehicles = vehicles(tipoVehiculo,plaza,placa,color,propietario,accesorios,horaEntrada,horaSalida,tiempoTotal,fechaA,pagar,codBarras,usuario)
                 db.session.add(newVehicles)
                 db.session.commit()

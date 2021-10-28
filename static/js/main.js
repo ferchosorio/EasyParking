@@ -78,8 +78,15 @@ function expCont(e,opciones,espacio){
         }
     });
 }
-function impFactura(fac) {
+function impFactura(fac,cierra) {
     document.querySelector(fac).style.display="flex";
+    window.print();
+    document.querySelector(cierra).addEventListener('click',()=>{
+        location.href = "/ingresar_vehiculo";
+    });
+}
+function noFac() {
+    location.href = "/ingresar_vehiculo";
 }
 setTimeout(()=>{
     if (document.querySelector(".noPassed")){

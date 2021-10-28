@@ -19,3 +19,5 @@ visitor
 Werkzeug
 flask-marshmallow
 marshmallow-sqlalchemy
+Pillow
+pyStrich

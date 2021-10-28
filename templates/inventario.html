@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <title>Inventario</title>
+</head>
+<body>
+    <div class="espacioInvent">
+        <div class="conteInventario">
+            <span class="titInventario">Inventario de Vehículos</span>
+            <table class="tabla">
+                    <tr>
+                        <th>Tipo V.</th>
+                        <th>Plaza</th>
+                        <th>Placa</th>
+                        <th>Propietario</th>
+                    </tr>
+                    {% for x in consulta: %}
+                    <tr>
+                        <td>{{ x.tipo_de_vehiculo }}</td>
+                        <td>{{ x.plaza }}</td>
+                        <td>{{ x.placa }}</td>
+                        <td>{{ x.propietario }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

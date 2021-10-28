@@ -7,6 +7,8 @@ from sqlalchemy.orm import column_property
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
+import random
+from pystrich.ean13 import EAN13Encoder
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:root@localhost:5432/easy_parking'
@@ -38,6 +40,13 @@ def horaActual():
     minutos = now.minute
     segs = now.second
     return f"{horas}:{minutos}:{segs}"
+
+def codigoBarras(serie):
+    identify = random.randint(1000,10000000)
+    ruta = "static/assets/images/codigo_barras"
+    crear = EAN13Encoder(serie)
+    crear.save(ruta+str(identify))
+    return f"{ruta}/{identify}"
 
 class easy_parking(db.Model):
     __tablename__ = 'easy_parking'
@@ -109,9 +118,10 @@ class vehicles(db.Model):
     tiempo_total = db.Column(db.String(100))
     fecha = db.Column(db.String(100))
     valor_a_pagar = db.Column(db.Integer)
+    barras = db.Column(db.String(256))
     usuario = db.Column(db.String(100))
 
-    def __init__(self,tipo_de_vehiculo,plaza,placa,color,propietario,accesorios,hora_entrada,hora_salida,tiempo_total,fecha,valor_a_pagar,usuario):
+    def __init__(self,tipo_de_vehiculo,plaza,placa,color,propietario,accesorios,hora_entrada,hora_salida,tiempo_total,fecha,valor_a_pagar,barras,usuario):
         self.tipo_de_vehiculo = tipo_de_vehiculo
         self.plaza = plaza
         self.placa = placa
@@ -123,11 +133,12 @@ class vehicles(db.Model):
         self.tiempo_total = tiempo_total
         self.fecha = fecha
         self.valor_a_pagar = valor_a_pagar
+        self.barras = barras
         self.usuario = usuario
 
 class vehiclesSchema(ma.Schema):
     class Meta:
-        campos = ('id','tipo_de_vehiculo','plaza','placa','color','propietario','accesorios','hora_entrada','hora_salida','tiempo_total','fecha','valor_a_pagar','usuario')
+        campos = ('id','tipo_de_vehiculo','plaza','placa','color','propietario','accesorios','hora_entrada','hora_salida','tiempo_total','fecha','valor_a_pagar','barras','usuario')
 
 vehicles_schema = vehiclesSchema()
 vehicles_schemas = vehiclesSchema(many=True)
@@ -310,25 +321,34 @@ def panel(sesion):
 @app.route("/vehiculos", methods=['POST'])
 def vehiculos():
     if request.method == "POST":
-        try:
-            tipoVehiculo = request.form['tipoV']
-            plaza = request.form['plaza']
-            placa = request.form['placa']
-            color = request.form['color']
-            propietario = request.form['propietario']
-            accesorios = request.form['accesorios']
-            usuario = session['usu']
-            horaEntrada = horaActual()
-            horaSalida = "0:0:0"
-            tiempoTotal = 0
-            fechaA = fechaActual()
-            pagar = 0
-            newVehicles = vehicles(tipoVehiculo,plaza,placa,color,propietario,accesorios,horaEntrada,horaSalida,tiempoTotal,fechaA,pagar,usuario)
-            db.session.add(newVehicles)
-            db.session.commit()
-            return ingresoVehiculo(1)
-        except:
-            return ingresoVehiculo(0)
+        plaza = request.form['plaza']
+        verifPlaza = db.session.query(vehicles.plaza).filter(
+            vehicles.plaza == plaza
+        )
+        res = [x for x in verifPlaza]
+        if len(res) > 0:
+            return ingresoVehiculo(2)
+        else:
+            try:
+                serieBarras = random.randint(100000,10000000)
+                tipoVehiculo = request.form['tipoV']
+                placa = request.form['placa']
+                color = request.form['color']
+                propietario = request.form['propietario']
+                accesorios = request.form['accesorios']
+                usuario = session['usu']
+                horaEntrada = horaActual()
+                horaSalida = "0:0:0"
+                tiempoTotal = 0
+                fechaA = fechaActual()
+                pagar = 0
+                codBarras = codigoBarras(str(serieBarras))
+                newVehicles = vehicles(tipoVehiculo,plaza,placa,color,propietario,accesorios,horaEntrada,horaSalida,tiempoTotal,fechaA,pagar,codBarras,usuario)
+                db.session.add(newVehicles)
+                db.session.commit()
+                return ingresoVehiculo(1)
+            except:
+                return ingresoVehiculo(0)
 
 @app.route("/ingresados")
 def ingresados():
@@ -433,6 +453,13 @@ def principal(vl=None):
 def mensualidad():
     consu = db.session.query(monthly).all()
     return render_template("mensual.html",dats = consu)
+
+@app.route("/inventario")
+def inventarioVehiculos():
+    consulta_vehiculos = db.session.query(vehicles).filter(
+        vehicles.hora_salida == '0:0:0'
+    )
+    return render_template("inventario.html",consulta=consulta_vehiculos)
 
 @app.route("/controlPanel")
 def controlPanel():
